@@ -2,6 +2,9 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.initConfig({
+    clean: {
+      tests: ['tmp']
+    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -9,36 +12,47 @@ module.exports = function (grunt) {
       lib: [
         'Gruntfile.js',
         'index.js',
-        'lib/*.js',
+        'lib/*.js'
+      ],
+      test: [
         'test/*.js'
       ]
     },
     mochacli: {
       options: {
-        ui: 'bdd'
+        ui: 'bdd',
+        reporter: 'spec'
       },
-      all: [
+      test: [
         'test/*.js'
       ]
     },
     watch: {
-      all: {
+      lib: {
         files: [
           'Gruntfile.js',
           'index.js',
-          'lib/*.js',
+          'lib/*.js'
+        ],
+        tasks: ['jshint:lib', 'test']
+      },
+      test: {
+        files: [
           'test/*.js',
         ],
-        tasks: ['jshint', 'test']
+        tasks: ['jshint:test', 'test']
       }
     }
   });
 
+  grunt.loadTasks('tasks');
+
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-notify');
-  
-  grunt.registerTask('test', ['mochacli']);
+
+  grunt.registerTask('test', ['clean', 'fixtures', 'mochacli']);
   grunt.registerTask('default', ['jshint', 'test']);
 };
