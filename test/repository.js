@@ -9,6 +9,7 @@ describe('repository([options|cwd], [callback])', function () {
 
   var fixtures = require('./fixtures');
   var repository = require('../lib/repository');
+  var config = require('../lib/config');
   var refs = require('../lib/refs');
 
   it('returns a lazily populated Repository instance', function (done) {
@@ -101,7 +102,10 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Config instance that contains the repository\'s configuration');
+    it('returns a Config instance', function () {
+      var cfg = repo.config();
+      expect(cfg).to.be.a(config.Config);
+    });
 
   });
 
@@ -113,7 +117,7 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Refs instance that contains the repository\'s tags and their commits', function () {
+    it('returns a Refs instance', function () {
       var tags = repo.tags();
       expect(tags).to.be.a(refs.Refs);
     });
@@ -128,7 +132,7 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Refs instance that contains the repository\'s heads and their commits', function () {
+    it('returns a Refs instance', function () {
       var heads = repo.heads();
       expect(heads).to.be.a(refs.Refs);
     });
