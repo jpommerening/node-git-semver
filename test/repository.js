@@ -93,6 +93,8 @@ describe('repository([path, [options,]] callback)', function () {
   });
 
   describe('.config()', function () {
+
+    it('returns a Config instance that contains the repository\'s configuration');
   });
 
   describe('.tags()', function () {
