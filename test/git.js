@@ -1,7 +1,6 @@
 /*global describe, it*/
 
 var expect = require('expect.js');
-var child_process = require('child_process');
 
 describe('git([options])', function () {
   'use strict';
@@ -13,7 +12,7 @@ describe('git([options])', function () {
     expect(g).to.be.a(git.Git);
   });
 
-  describe('.run([argument[, argument]])', function (done) {
+  describe('.run([argument[, argument]])', function () {
 
     it('runs the git executable with the specified arguments', function (done) {
       var g = git();

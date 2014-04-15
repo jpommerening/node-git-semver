@@ -2,7 +2,6 @@
 
 var expect = require('expect.js');
 var path = require('path');
-var findup = require('findup');
 
 describe('repository([path, [options,]] callback)', function () {
 
