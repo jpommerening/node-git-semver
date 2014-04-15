@@ -1,0 +1,36 @@
+{
+  "name": "git-semver",
+  "version": "0.0.1",
+  "description": "Manage semantically git repositories",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jpommerening/git-semver.git"
+  },
+  "author": {
+    "name": "Jonas Pommerening",
+    "email": "jonas.pommerening@gmail.com",
+    "url": "https://npmjs.org/~jpommerening"
+  },
+  "bugs": {
+    "url": "http://github.com/jpommerening/git-semver/issues"
+  },
+  "main": "lib",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "semver": "~2.2.1",
+    "findup": "~0.1.5",
+    "which": "~1.0.5"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-mocha-cli": "~1.8.0",
+    "grunt-notify": "~0.2.20",
+    "expect.js": "~0.3.1"
+  }
+}
