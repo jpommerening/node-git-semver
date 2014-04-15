@@ -51,10 +51,12 @@ module.exports = function (grunt) {
   }
 
   function submodule(remote, repository, target, cb) {
-    var args = [ 'submodule', 'add', root + remote, target ];
+    var sub = path.relative(root + repository, root + target);
+    var args = [ 'submodule', 'add', root + remote, sub ];
+
     var opts = {cwd: repository};
 
-    rungit(args, opts, 'Added submodule ' + remote + 'in ' + repository + '/' + target, function (err) {
+    rungit(args, opts, 'Added submodule ' + remote + 'in ' + repository + '/' + sub, function (err) {
       if (err) {
         return cb(err);
       }
@@ -65,11 +67,7 @@ module.exports = function (grunt) {
   grunt.registerTask('fixtures', function() {
     var done = this.async();
 
-    var tarfile = 'test/fixtures/repository.tar';
-    var remote = 'tmp/remote.git';
-    var repository = 'tmp/repository';
-    var bare = 'tmp/bare.git';
-    var sub = 'submodule';
+    var paths = grunt.file.readJSON('test/fixtures/paths.json');
 
     function step(fn) {
       var args = [].slice.call(arguments, 1);
@@ -81,10 +79,10 @@ module.exports = function (grunt) {
     }
 
     async.series([
-      step(extract, tarfile, remote),
-      step(clone, remote, repository, false),
-      step(clone, remote, bare, true),
-      step(submodule, remote, repository, sub)
+      step(extract, paths.remote.extract, paths.remote.gitdir),
+      step(clone, paths.remote.gitdir, paths.repository.worktree, false),
+      step(clone, paths.remote.gitdir, paths.bare.gitdir, true),
+      step(submodule, paths.remote.gitdir, paths.repository.worktree, paths.submodule.worktree)
     ], done);
   });
 

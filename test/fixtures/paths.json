@@ -1,0 +1,29 @@
+{
+  "remote": {
+    "gitdir": "tmp/remote.git",
+    "config": "tmp/remote.git/config",
+    "bare": true,
+    "extract": "test/fixtures/repository.tar"
+  },
+  "repository": {
+    "gitdir": "tmp/repository/.git",
+    "worktree": "tmp/repository",
+    "config": "tmp/repository/.git/config",
+    "bare": false,
+    "origin": "tmp/remote.git"
+  },
+  "bare": {
+    "gitdir": "tmp/bare.git",
+    "config": "tmp/bare.git/config",
+    "bare": true,
+    "origin": "tmp/remote.git"
+  },
+  "submodule": {
+    "gitdir": "tmp/repository/.git/modules/submodule",
+    "worktree": "tmp/repository/submodule",
+    "config": "tmp/repository/.git/modules/submodule/config",
+    "bare": false,
+    "submodule": true,
+    "origin": "tmp/remote.git"
+  }
+}

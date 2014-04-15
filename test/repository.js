@@ -13,7 +13,7 @@ describe('repository([path, [options,]] callback)', function () {
   it('returns a lazily populated Repository instance', function (done) {
     var repo = repository(done);
     expect(repo).to.be.a(repository.Repository);
-    expect(repo.gitdir).not.to.be.ok();
+    expect(repo.gitdir).to.be(undefined);
   });
 
   describe('when called with only a callback', function () {
