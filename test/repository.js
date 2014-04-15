@@ -43,7 +43,6 @@ describe('repository([path, [options,]] callback)', function () {
       repo = repository(__dirname, done);
     });
 
-
     it('creates a reference to the Git repository pointed at', function () {
       expect(repo.gitdir).to.equal(gitdir);
       expect(repo.worktree).to.equal(worktree);
@@ -62,4 +61,3 @@ describe('repository([path, [options,]] callback)', function () {
 
 
 });
-
