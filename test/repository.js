@@ -3,12 +3,13 @@
 var expect = require('expect.js');
 var path = require('path');
 
-describe('repository([path, [options,]] callback)', function () {
+describe('repository([options|cwd], [callback])', function () {
 
   'use strict';
 
   var fixtures = require('./fixtures');
   var repository = require('../lib/repository');
+  var refs = require('../lib/refs');
 
   it('returns a lazily populated Repository instance', function (done) {
     var repo = repository(done);
@@ -93,15 +94,45 @@ describe('repository([path, [options,]] callback)', function () {
   });
 
   describe('.config()', function () {
+    var fixture = fixtures.repository;
+    var repo;
+
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
 
     it('returns a Config instance that contains the repository\'s configuration');
+
   });
 
   describe('.tags()', function () {
+    var fixture = fixtures.repository;
+    var repo;
+
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
+
+    it('returns a Refs instance that contains the repository\'s tags and their commits', function () {
+      var tags = repo.tags();
+      expect(tags).to.be.a(refs.Refs);
+    });
+
   });
 
-  describe('.branches()', function () {
-  });
+  describe('.heads()', function () {
+    var fixture = fixtures.repository;
+    var repo;
 
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
+
+    it('returns a Refs instance that contains the repository\'s heads and their commits', function () {
+      var heads = repo.heads();
+      expect(heads).to.be.a(refs.Refs);
+    });
+
+  });
 
 });

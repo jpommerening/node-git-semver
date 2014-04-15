@@ -3,7 +3,7 @@
 var expect = require('expect.js');
 var path = require('path');
 
-describe('config([path, [options,]] callback)', function () {
+describe('config([options|file], [callback])', function () {
 
   'use strict';
 
