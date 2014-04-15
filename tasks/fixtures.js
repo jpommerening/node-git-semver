@@ -52,8 +52,14 @@ module.exports = function (grunt) {
 
   function submodule(remote, repository, target, cb) {
     var args = [ 'submodule', 'add', root + remote, target ];
+    var opts = {cwd: repository};
 
-    rungit(args, {cwd: repository}, 'Added submodule ' + remote + 'in ' + repository + '/' + target, cb);
+    rungit(args, opts, 'Added submodule ' + remote + 'in ' + repository + '/' + target, function (err) {
+      if (err) {
+        return cb(err);
+      }
+      rungit(['commit', '-m', 'added submodule'], opts, 'Committed added submodule in ' + repository, cb);
+    });
   }
 
   grunt.registerTask('fixtures', function() {

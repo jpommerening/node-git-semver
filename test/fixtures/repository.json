@@ -1,0 +1,26 @@
+{
+  "HEAD": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7",
+  "tags": {
+    "v0.0.1": "255d434cb862dc4675aa80bee124d78c293ba7e9",
+    "v0.0.2": "25df29a96117a5ec1ae540edbaddbcc0a3624afd",
+    "v0.0.3": "51b2e40d61daa9912f38f0d07a83e2f588fc5c4c",
+    "v0.1.0": "7d09a9721ce459bcea39ca8c3eeefdeb5707adba",
+    "v0.1.1": "30c978ff635c94806b737ff2ee3a16390d09d06b",
+    "v0.1.2": "b566555003c5e4342494211564c5d2d0017a9924",
+    "v0.2.0": "061fb7002cac4be2cf1566a260a1dfdf0f4f1303",
+    "v0.2.1": "09fd6011cf7d79e262bf9b544591eb7c9babf2cd",
+    "v1.0.0-rc1": "b88277e9a7cffc54f1f459bab8bde02fcff388a1",
+    "v1.0.0-rc2": "6e0bd3df02091618f382182661bd315cdd353a70",
+    "v1.0.0": "f024e76a877de04c96d5537cccd26a1553f7a817",
+    "v1.0.0+build1": "898976a38015e8a4ad2dbe7ad7131218b7428d29",
+    "v1.0.0+build2": "34bccab36444c59a91be87b246afa91ba1c481c1",
+    "v1.0.1": "32d559bf726ff5e1ba9ea4ab54e05b4b40a612ad",
+    "v1.1.0": "ad14350a4f0c0dd31b6bd7ee5e6bb6fbe29d0be4",
+    "v1.2.0": "968402e083fdeba174c4a1f2720d2eac608c894a",
+    "v1.3.0": "b29c2e7a469a18d245840cf5719fcb524196c603",
+    "v1.3.1": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
+  },
+  "branches": {
+    "master": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
+  }
+}
