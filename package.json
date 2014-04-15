@@ -22,6 +22,7 @@
   "dependencies": {
     "semver": "~2.2.1",
     "findup": "~0.1.5",
+    "async": "~0.7.0",
     "which": "~1.0.5"
   },
   "devDependencies": {
@@ -33,7 +34,6 @@
     "grunt-notify": "~0.2.20",
     "expect.js": "~0.3.1",
     "tar": "~0.1.19",
-    "grunt-contrib-clean": "~0.5.0",
-    "async": "~0.7.0"
+    "grunt-contrib-clean": "~0.5.0"
   }
 }

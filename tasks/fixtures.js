@@ -67,7 +67,7 @@ module.exports = function (grunt) {
   grunt.registerTask('fixtures', function() {
     var done = this.async();
 
-    var paths = grunt.file.readJSON('test/fixtures/paths.json');
+    var fixtures = grunt.file.readJSON('test/fixtures/index.json');
 
     function step(fn) {
       var args = [].slice.call(arguments, 1);
@@ -79,10 +79,10 @@ module.exports = function (grunt) {
     }
 
     async.series([
-      step(extract, paths.remote.extract, paths.remote.gitdir),
-      step(clone, paths.remote.gitdir, paths.repository.worktree, false),
-      step(clone, paths.remote.gitdir, paths.bare.gitdir, true),
-      step(submodule, paths.remote.gitdir, paths.repository.worktree, paths.submodule.worktree)
+      step(extract, fixtures.remote.extract, fixtures.remote.gitdir),
+      step(clone, fixtures.remote.gitdir, fixtures.repository.worktree, false),
+      step(clone, fixtures.remote.gitdir, fixtures.bare.gitdir, true),
+      step(submodule, fixtures.remote.gitdir, fixtures.repository.worktree, fixtures.submodule.worktree)
     ], done);
   });
 
