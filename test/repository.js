@@ -8,6 +8,7 @@ describe('repository([options|cwd], [callback])', function () {
   'use strict';
 
   var fixtures = require('./fixtures');
+  fixtures.repository.meta = require('./fixtures/repository');
   var repository = require('../lib/repository');
   var config = require('../lib/config');
   var refs = require('../lib/refs');
@@ -94,7 +95,7 @@ describe('repository([options|cwd], [callback])', function () {
 
   });
 
-  describe('.config()', function () {
+  describe('.config([callback])', function () {
     var fixture = fixtures.repository;
     var repo;
 
@@ -109,7 +110,7 @@ describe('repository([options|cwd], [callback])', function () {
 
   });
 
-  describe('.tags()', function () {
+  describe('.tags([callback])', function () {
     var fixture = fixtures.repository;
     var repo;
 
@@ -122,9 +123,18 @@ describe('repository([options|cwd], [callback])', function () {
       expect(tags).to.be.a(refs.Refs);
     });
 
+    it('populates the returned Refs instance with the repository\'s tags', function (done) {
+      repo.tags(function (err, tags) {
+        for (var tag in fixture.meta.tags) {
+          expect(tags[tag]).to.equal(fixture.meta.tags[tag]);
+        }
+        done();
+      });
+    });
+
   });
 
-  describe('.heads()', function () {
+  describe('.heads([callback])', function () {
     var fixture = fixtures.repository;
     var repo;
 
@@ -135,6 +145,13 @@ describe('repository([options|cwd], [callback])', function () {
     it('returns a Refs instance', function () {
       var heads = repo.heads();
       expect(heads).to.be.a(refs.Refs);
+    });
+
+    it('populates the returned Refs instance with the repository\'s branches', function (done) {
+      repo.heads(function (err, heads) {
+        expect(heads.master).to.match(/[0-9a-f]{40}/);
+        done();
+      });
     });
 
   });
