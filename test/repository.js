@@ -108,6 +108,13 @@ describe('repository([options|cwd], [callback])', function () {
       expect(cfg).to.be.a(config.Config);
     });
 
+    it('populates the returned Config instance with configuration entries', function (done) {
+      repo.config(function (err, cfg) {
+        expect(cfg.submodule.submodule.url).to.equal(path.resolve(fixtures.submodule.origin));
+        done();
+      });
+    });
+
   });
 
   describe('.tags([callback])', function () {
