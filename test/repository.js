@@ -93,6 +93,22 @@ describe('repository([options|cwd], [callback])', function () {
       });
     });
 
+    describe('for a submodules\' .git dir', function () {
+      var fixture = fixtures.submodule;
+      var repo;
+
+      beforeEach(function (done) {
+        repo = repository(fixture.gitdir, done);
+      });
+
+      it('resolves the repository\'s .git dir', function () {
+        expect(repo.gitdir).to.equal(fixture.gitdir);
+      });
+
+      it('resolves the repository\'s work tree', function () {
+        expect(repo.worktree).to.equal(fixture.worktree);
+      });
+    });
   });
 
   describe('.config([callback])', function () {
@@ -113,14 +129,14 @@ describe('repository([options|cwd], [callback])', function () {
     it('populates the returned Config instance with configuration entries', function (done) {
       repo.config(function (err, cfg) {
         expect(cfg[key]).to.equal(value);
-        done();
+        done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var cfg = repository(fixture.worktree).config(function (err, cfg) {
         expect(cfg[key]).to.equal(value);
-        done();
+        done(err);
       });
       expect(cfg[key]).to.be(undefined);
     });
@@ -144,14 +160,14 @@ describe('repository([options|cwd], [callback])', function () {
     it('populates the returned Refs instance with the repository\'s tags', function (done) {
       repo.tags(function (err, tags) {
         expect(tags[tag]).to.equal(commit);
-        done();
+        done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var tags = repository(fixture.worktree).tags(function (err, tags) {
         expect(tags[tag]).to.equal(commit);
-        done();
+        done(err);
       });
       expect(tags[tag]).to.be(undefined);
     });
@@ -175,16 +191,46 @@ describe('repository([options|cwd], [callback])', function () {
     it('populates the returned Refs instance with the repository\'s branches', function (done) {
       repo.heads(function (err, heads) {
         expect(heads[head]).to.match(commit);
-        done();
+        done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var heads = repository(fixture.worktree).heads(function (err, heads) {
         expect(heads[head]).to.match(commit);
-        done();
+        done(err);
       });
       expect(heads[head]).to.be(undefined);
+    });
+  });
+
+  describe('.versions([range], [callback])', function () {
+    var fixture = fixtures.repository;
+    var tags = fixture.meta.tags;
+    var repo;
+
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
+
+    it('returns a Versions instance');
+
+    it('populates the returned Versions instance with semantic versions', function (done) {
+      repo.versions(function (err, versions) {
+        for (var tag in tags) {
+          expect(versions[tag]).to.equal(tags[tag]);
+        }
+        done(err);
+      });
+    });
+
+    it('filters according to semantic version ranges', function (done) {
+      repo.versions('<1.0.0', function (err, versions) {
+        /* TODO: remove "v" */
+        expect(versions['v0.1.0']).to.not.be(undefined);
+        expect(versions['v1.0.0']).to.be(undefined);
+        done(err);
+      });
     });
   });
 
