@@ -1,7 +1,6 @@
 /*global describe, it, beforeEach*/
 
 var expect = require('expect.js');
-var path = require('path');
 
 describe('refs([options|path], [callback])', function () {
 

@@ -2,6 +2,7 @@
 
 var expect = require('expect.js');
 var path = require('path');
+var semver = require('semver');
 
 describe('repository([options|cwd], [callback])', function () {
 
@@ -11,6 +12,7 @@ describe('repository([options|cwd], [callback])', function () {
   var repository = require('../lib/repository');
   var config = require('../lib/config');
   var refs = require('../lib/refs');
+  var versions = require('../lib/versions');
 
   it('returns a lazily populated Repository instance', function (done) {
     var repo = repository(done);
@@ -228,12 +230,16 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Versions instance');
+    it('returns a Versions instance', function () {
+      var vrs = repo.versions();
+      expect(vrs).to.be.a(versions.Versions);
+    });
 
     it('populates the returned Versions instance with semantic versions', function (done) {
       repo.versions(function (err, versions) {
         for (var tag in tags) {
-          expect(versions[tag]).to.equal(tags[tag]);
+          /* TODO: instead of removing the first char, think of something else */
+          expect(versions[tag.substr(1)]).to.equal(tags[tag]);
         }
         done(err);
       });
@@ -241,9 +247,8 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('filters according to semantic version ranges', function (done) {
       repo.versions('<1.0.0', function (err, versions) {
-        /* TODO: remove "v" */
-        expect(versions['v0.1.0']).to.not.be(undefined);
-        expect(versions['v1.0.0']).to.be(undefined);
+        expect(versions['0.1.0']).to.not.be(undefined);
+        expect(versions['1.0.0']).to.be(undefined);
         done(err);
       });
     });
