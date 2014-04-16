@@ -97,6 +97,8 @@ describe('repository([options|cwd], [callback])', function () {
 
   describe('.config([callback])', function () {
     var fixture = fixtures.repository;
+    var key = 'submodule.submodule.url';
+    var value = path.resolve(fixtures.submodule.origin);
     var repo;
 
     beforeEach(function (done) {
@@ -110,15 +112,24 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Config instance with configuration entries', function (done) {
       repo.config(function (err, cfg) {
-        expect(cfg.submodule.submodule.url).to.equal(path.resolve(fixtures.submodule.origin));
+        expect(cfg[key]).to.equal(value);
         done();
       });
     });
 
+    it('can be called before the repository is initialized', function (done) {
+      var cfg = repository(fixture.worktree).config(function (err, cfg) {
+        expect(cfg[key]).to.equal(value);
+        done();
+      });
+      expect(cfg[key]).to.be(undefined);
+    });
   });
 
   describe('.tags([callback])', function () {
     var fixture = fixtures.repository;
+    var tag = '1.0.0';
+    var commit = fixture.meta.tags[tag];
     var repo;
 
     beforeEach(function (done) {
@@ -132,17 +143,24 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Refs instance with the repository\'s tags', function (done) {
       repo.tags(function (err, tags) {
-        for (var tag in fixture.meta.tags) {
-          expect(tags[tag]).to.equal(fixture.meta.tags[tag]);
-        }
+        expect(tags[tag]).to.equal(commit);
         done();
       });
     });
 
+    it('can be called before the repository is initialized', function (done) {
+      var tags = repository(fixture.worktree).tags(function (err, tags) {
+        expect(tags[tag]).to.equal(commit);
+        done();
+      });
+      expect(tags[tag]).to.be(undefined);
+    });
   });
 
   describe('.heads([callback])', function () {
     var fixture = fixtures.repository;
+    var head = 'master';
+    var commit = /[0-9a-f]{40}/;
     var repo;
 
     beforeEach(function (done) {
@@ -156,11 +174,18 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Refs instance with the repository\'s branches', function (done) {
       repo.heads(function (err, heads) {
-        expect(heads.master).to.match(/[0-9a-f]{40}/);
+        expect(heads[head]).to.match(commit);
         done();
       });
     });
 
+    it('can be called before the repository is initialized', function (done) {
+      var heads = repository(fixture.worktree).heads(function (err, heads) {
+        expect(heads[head]).to.match(commit);
+        done();
+      });
+      expect(heads[head]).to.be(undefined);
+    });
   });
 
 });
