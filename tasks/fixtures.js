@@ -67,7 +67,7 @@ module.exports = function (grunt) {
   grunt.registerTask('fixtures', function() {
     var done = this.async();
 
-    var fixtures = grunt.file.readJSON('test/fixtures/index.json');
+    var fixtures = grunt.file.readJSON('test/fixtures/repositories.json');
 
     function step(fn) {
       var args = [].slice.call(arguments, 1);

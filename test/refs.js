@@ -8,8 +8,6 @@ describe('refs([options|path], [callback])', function () {
   'use strict';
 
   var fixture = require('./fixtures').repository;
-  var tags = require('./fixtures/repository').tags;
-  var heads = require('./fixtures/repository').heads;
 
   var refs = require('../lib/refs');
 
@@ -51,8 +49,8 @@ describe('refs([options|path], [callback])', function () {
   describe('when called with only a callback', function () {
     it('reads all available refs', function (done) {
       var rfs = refs(function (err) {
-        for (var tag in tags) {
-          expect(rfs['refs/tags/' + tag]).to.equal(tags[tag]);
+        for (var tag in fixture.tags) {
+          expect(rfs['refs/tags/' + tag]).to.equal(fixture.tags[tag]);
         }
         done(err);
       });
@@ -65,8 +63,8 @@ describe('refs([options|path], [callback])', function () {
 
     it('reads the refs at the given path', function (done) {
       var rfs = refs('refs/tags', function (err) {
-        for (var tag in tags) {
-          expect(rfs[tag]).to.equal(tags[tag]);
+        for (var tag in fixture.tags) {
+          expect(rfs[tag]).to.equal(fixture.tags[tag]);
         }
         done(err);
       });

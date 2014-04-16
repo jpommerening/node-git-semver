@@ -8,7 +8,6 @@ describe('repository([options|cwd], [callback])', function () {
   'use strict';
 
   var fixtures = require('./fixtures');
-  fixtures.repository.meta = require('./fixtures/repository');
   var repository = require('../lib/repository');
   var config = require('../lib/config');
   var refs = require('../lib/refs');
@@ -161,7 +160,7 @@ describe('repository([options|cwd], [callback])', function () {
   describe('.tags([callback])', function () {
     var fixture = fixtures.repository;
     var tag = '1.0.0';
-    var commit = fixture.meta.tags[tag];
+    var commit = fixture.tags[tag];
     var repo;
 
     beforeEach(function (done) {
@@ -222,7 +221,7 @@ describe('repository([options|cwd], [callback])', function () {
 
   describe('.versions([range], [callback])', function () {
     var fixture = fixtures.repository;
-    var tags = fixture.meta.tags;
+    var tags = fixture.tags;
     var repo;
 
     beforeEach(function (done) {

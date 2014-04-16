@@ -20,7 +20,7 @@
     "v1.3.0": "b29c2e7a469a18d245840cf5719fcb524196c603",
     "v1.3.1": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
   },
-  "branches": {
+  "heads": {
     "master": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
   }
 }
