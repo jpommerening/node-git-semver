@@ -57,6 +57,10 @@ describe('repository([options|cwd], [callback])', function () {
       it('resolves the repository\'s work tree', function () {
         expect(repo.worktree).to.equal(fixture.worktree);
       });
+
+      it('sets repository\'s bare property to false', function () {
+        expect(repo.bare).to.be(false);
+      });
     });
 
     describe('for bare repositories', function () {
@@ -73,6 +77,10 @@ describe('repository([options|cwd], [callback])', function () {
 
       it('leaves repository\'s work tree undefined', function () {
         expect(repo.worktree).to.be(undefined);
+      });
+
+      it('sets repository\'s bare property to true', function () {
+        expect(repo.bare).to.be(true);
       });
     });
 
@@ -91,6 +99,10 @@ describe('repository([options|cwd], [callback])', function () {
       it('resolves the repository\'s work tree', function () {
         expect(repo.worktree).to.equal(fixture.worktree);
       });
+
+      it('sets repository\'s bare property to false', function () {
+        expect(repo.bare).to.be(false);
+      });
     });
 
     describe('for a submodules\' .git dir', function () {
@@ -107,6 +119,10 @@ describe('repository([options|cwd], [callback])', function () {
 
       it('resolves the repository\'s work tree', function () {
         expect(repo.worktree).to.equal(fixture.worktree);
+      });
+
+      it('sets repository\'s bare property to false', function () {
+        expect(repo.bare).to.be(false);
       });
     });
   });

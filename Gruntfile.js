@@ -54,5 +54,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-notify');
 
   grunt.registerTask('test', ['clean', 'fixtures', 'mochacli']);
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['test', 'jshint']);
 };

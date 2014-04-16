@@ -16,6 +16,18 @@ describe('config([options|file], [callback])', function () {
     expect(cfg.core).to.be(undefined);
   });
 
+  it('emits configuration entries as \'entry\' events', function (done) {
+    var entry = {};
+    var cfg = config(function (err) {
+      expect(entry.key).to.not.be(undefined);
+      expect(entry.value).to.not.be(undefined);
+      done(err);
+    }).on('entry', function (key, value) {
+      entry.key = key;
+      entry.value = value;
+    });
+  })
+
   describe('when called with only a callback', function () {
     var cfg;
 
