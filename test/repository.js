@@ -10,6 +10,7 @@ describe('repository([options|cwd], [callback])', function () {
 
   var fixtures = require('./fixtures');
   var repository = require('../lib/repository');
+  var reference = require('../lib/reference');
   var config = require('../lib/config');
   var refs = require('../lib/refs');
   var versions = require('../lib/versions');
@@ -138,8 +139,8 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Config instance', function () {
-      var cfg = repo.config();
+    it('returns a Config instance', function (done) {
+      var cfg = repo.config(done);
       expect(cfg).to.be.a(config.Config);
     });
 
@@ -159,6 +160,28 @@ describe('repository([options|cwd], [callback])', function () {
     });
   });
 
+  describe('.HEAD([callback])', function () {
+    var fixture = fixtures.repository;
+    var commit = fixture.HEAD;
+    var repo;
+
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
+
+    it('returns a Reference instance', function (done) {
+      var ref = repo.HEAD(done);
+      expect(ref).to.be.a(reference.Reference);
+    });
+
+    it('points the returned Reference instance to the repository\'s HEAD', function (done) {
+      repo.HEAD(function (err, ref) {
+        expect(ref.commit).to.equal(commit);
+        done(err);
+      });
+    });
+  });
+
   describe('.tags([callback])', function () {
     var fixture = fixtures.repository;
     var tag = '1.0.0';
@@ -169,8 +192,8 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Refs instance', function () {
-      var tags = repo.tags();
+    it('returns a Refs instance', function (done) {
+      var tags = repo.tags(done);
       expect(tags).to.be.a(refs.Refs);
     });
 
@@ -200,8 +223,8 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Refs instance', function () {
-      var heads = repo.heads();
+    it('returns a Refs instance', function (done) {
+      var heads = repo.heads(done);
       expect(heads).to.be.a(refs.Refs);
     });
 
@@ -230,16 +253,17 @@ describe('repository([options|cwd], [callback])', function () {
       repo = repository(fixture.worktree, done);
     });
 
-    it('returns a Versions instance', function () {
-      var vrs = repo.versions();
+    it('returns a Versions instance', function (done) {
+      var vrs = repo.versions(done);
       expect(vrs).to.be.a(versions.Versions);
     });
 
     it('populates the returned Versions instance with semantic versions', function (done) {
       repo.versions(function (err, versions) {
         for (var tag in tags) {
-          /* TODO: instead of removing the first char, think of something else */
-          expect(versions[tag.substr(1)]).to.equal(tags[tag]);
+          var parsed = semver.parse(tag);
+          var v = parsed.version + (parsed.build.length ? '+' + parsed.build.join('.') : '');
+          expect(versions[v]).to.equal(tags[tag]);
         }
         done(err);
       });

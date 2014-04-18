@@ -38,6 +38,8 @@ describe('refs([options|path], [callback])', function () {
         called = true;
       });
 
+      this.slow(200);
+
       setTimeout(function () {
         expect(called).to.be(false);
         rfs.emit('gitdir', fixture.gitdir);

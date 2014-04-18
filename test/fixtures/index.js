@@ -12,6 +12,9 @@ for (var name in repositories) {
 
 var repository = repositories.repository;
 
-repository.heads.master = repository.HEAD = fs.readFileSync(root + '/' + repository.gitdir + '/refs/heads/master');
+
+var master = root + '/' + repository.gitdir + '/refs/heads/master';
+
+repository.heads.master = repository.HEAD = fs.readFileSync(master).toString().trim();
 
 module.exports = repositories;
