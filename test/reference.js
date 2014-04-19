@@ -7,7 +7,7 @@ describe('reference([options|commit], [callback])', function () {
 
   'use strict';
 
-  var fixture = require('./fixtures').repository;
+  var fixtures = require('./fixtures');
   var reference = require('../lib/reference');
 
   it('returns a lazily populated Reference instance', function () {
@@ -24,7 +24,7 @@ describe('reference([options|commit], [callback])', function () {
 
       setTimeout(function () {
         expect(ref.commit).to.be(undefined);
-        ref.emit('gitdir', fixture.gitdir);
+        ref.emit('gitdir', fixtures.repository.gitdir);
       }, 70);
     });
   });
@@ -32,15 +32,31 @@ describe('reference([options|commit], [callback])', function () {
   describe('when called with only a callback', function () {
     it('reads the repository\'s HEAD reference', function (done) {
       var ref = reference(function (err) {
-        expect(ref.commit).to.equal(fixture.HEAD);
+        expect(ref.commit).to.equal(fixtures.repository.HEAD);
         done(err);
       });
-      ref.emit('gitdir', fixture.gitdir);
+      ref.emit('gitdir', fixtures.repository.gitdir);
     });
   });
 
   describe('.checkout([callback])', function () {
-    it('checks out the reference in the given worktree');
+    var repo;
+
+    beforeEach(function (done) {
+      fixtures.temporary(function (err, tmp) {
+        repo = tmp;
+        done(err);
+      });
+    });
+
+    afterEach(function (done) {
+      if (repo) {
+        repo.remove(done);
+      }
+    });
+
+    it('checks out the reference in the given worktree', function () {
+    });
     it('returns a Reference instance');
   });
 
