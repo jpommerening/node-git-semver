@@ -46,29 +46,25 @@ describe('refs([options|path], [callback])', function () {
   });
 
   describe('when called with only a callback', function () {
-    it('reads all available refs', function (done) {
-      var rfs = refs(function (err) {
+    it('reads all available refs as references', function (done) {
+      refs(function (err, rfs) {
         for (var tag in fixture.tags) {
           expect(rfs['refs/tags/' + tag]).to.equal(fixture.tags[tag]);
         }
         done(err);
-      });
-
-      rfs.emit('gitdir', fixture.gitdir);
+      }).emit('gitdir', fixture.gitdir);
     });
   });
 
   describe('when called with a path', function () {
 
     it('reads the refs at the given path', function (done) {
-      var rfs = refs('refs/tags', function (err) {
+      refs('refs/tags', function (err, rfs) {
         for (var tag in fixture.tags) {
           expect(rfs[tag]).to.equal(fixture.tags[tag]);
         }
         done(err);
-      });
-
-      rfs.emit('gitdir', fixture.gitdir);
+      }).emit('gitdir', fixture.gitdir);
     });
   });
 

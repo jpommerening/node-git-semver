@@ -11,6 +11,7 @@ function checkReturnCode(childProcess, done) {
 }
 
 describe('git([options])', function () {
+
   'use strict';
 
   var git = require('../lib/git');
@@ -82,7 +83,6 @@ describe('git([options])', function () {
   });
 
   describe('.checkout(revision, cb)', function () {
-    'use strict';
 
     var fixture;
     var g;

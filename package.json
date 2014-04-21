@@ -17,7 +17,7 @@
   },
   "main": "lib",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test jshint"
   },
   "dependencies": {
     "semver": "~2.2.1",
