@@ -14,9 +14,14 @@ module.exports = function (grunt) {
         'index.js',
         'lib/*.js'
       ],
-      test: [
-        'test/*.js'
-      ]
+      test: {
+        options: {
+          jshintrc: 'test/.jshintrc'
+        },
+        src: [
+          'test/*.js'
+        ]
+      }
     },
     mochacli: {
       options: {

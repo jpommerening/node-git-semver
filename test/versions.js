@@ -1,5 +1,3 @@
-/*global describe, it, beforeEach*/
-
 var expect = require('expect.js');
 
 describe('versions([options|range], [callback])', function () {

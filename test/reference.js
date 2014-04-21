@@ -1,7 +1,5 @@
-/*global describe, it, beforeEach*/
-
 var expect = require('expect.js');
-var path = require('path');
+var fs = require('fs');
 
 describe('reference([options|commit], [callback])', function () {
 
@@ -39,23 +37,29 @@ describe('reference([options|commit], [callback])', function () {
     });
   });
 
-  describe('.checkout([callback])', function () {
-    var repo;
+  describe('.checkout(worktree, [callback])', function () {
+    var fixture;
+    var ref;
 
     beforeEach(function (done) {
       fixtures.temporary(function (err, tmp) {
-        repo = tmp;
-        done(err);
+        fixture = tmp;
+        ref = reference({gitdir: fixture.gitdir, name: 'v1.0.0'}, done);
       });
     });
 
     afterEach(function (done) {
-      if (repo) {
-        repo.remove(done);
+      if (fixture) {
+        fixture.remove(done);
       }
     });
 
-    it('checks out the reference in the given worktree', function () {
+    it('checks out the reference in the given worktree', function (done) {
+      ref.checkout(fixture.worktree, function (err) {
+        var HEAD = fs.readFileSync(fixture.gitdir + '/HEAD').toString().trim();
+        expect(HEAD).to.equal(fixture.tags['v1.0.0']);
+        done(err);
+      });
     });
     it('returns a Reference instance');
   });

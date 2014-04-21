@@ -1,5 +1,3 @@
-/*global describe, it, beforeEach*/
-
 var expect = require('expect.js');
 var path = require('path');
 
@@ -18,7 +16,7 @@ describe('config([options|file], [callback])', function () {
 
   it('emits configuration entries as \'entry\' events', function (done) {
     var entry = {};
-    var cfg = config(function (err) {
+    config(function (err) {
       expect(entry.key).to.not.be(undefined);
       expect(entry.value).to.not.be(undefined);
       done(err);
@@ -26,7 +24,7 @@ describe('config([options|file], [callback])', function () {
       entry.key = key;
       entry.value = value;
     });
-  })
+  });
 
   describe('when called with only a callback', function () {
     var cfg;

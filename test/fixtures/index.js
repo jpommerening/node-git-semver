@@ -22,30 +22,29 @@ repository.heads.master = repository.HEAD = fs.readFileSync(master).toString().t
 repositories.temporary = function (cb) {
   var source = repositories.remote;
 
-  tmp.dir(function (err, workdir) {
+  tmp.dir(function (err, worktree) {
     if (err) {
       cb(err);
     }
 
     var origin = source.gitdir;
-    var childProcess = spawn('git', ['clone', origin, workdir]);
+    var childProcess = spawn('git', ['clone', origin, worktree]);
 
     childProcess.on('error', function (err) {
       cb(err);
     });
 
     childProcess.on('close', function () {
-      console.log('tmp', workdir);
       cb(null, {
-        gitdir: workdir + '/.git',
-        workdir: workdir,
+        gitdir: worktree + '/.git',
+        worktree: worktree,
         bare: false,
         origin: origin,
         HEAD: source.HEAD,
         heads: source.heads,
         tags: source.tags,
         remove: function (cb) {
-          rimraf(workdir, cb);
+          rimraf(worktree, cb);
         }
       });
     });

@@ -1,5 +1,3 @@
-/*global describe, it, beforeEach*/
-
 var expect = require('expect.js');
 
 describe('refs([options|path], [callback])', function () {
@@ -18,7 +16,7 @@ describe('refs([options|path], [callback])', function () {
 
   it('emits found references entries as \'entry\' events', function (done) {
     var entry = {};
-    var rfs = refs({ gitdir: fixture.gitdir }, function (err) {
+    refs({ gitdir: fixture.gitdir }, function (err) {
       expect(entry.name).to.not.be(undefined);
       expect(entry.commit).to.not.be(undefined);
       done(err);
@@ -26,7 +24,7 @@ describe('refs([options|path], [callback])', function () {
       entry.name = name;
       entry.commit = commit;
     });
-  })
+  });
 
   describe('when called without an explicit .git dir', function () {
     it('waits for a \'gitdir\' event before reading refs', function (done) {

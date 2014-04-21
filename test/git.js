@@ -1,21 +1,7 @@
-/*global describe, it*/
-
 var expect = require('expect.js');
 var path = require('path');
-
-function collectStdout(childProcess, callback) {
-  var buffer = '';
-
-  childProcess.stdout.on('data', function (data) {
-    buffer += data;
-  });
-  childProcess.stdout.on('end', function (data) {
-    if (data) {
-      buffer += data;
-    }
-    callback(buffer);
-  });
-}
+var fs = require('fs');
+var utils = require('../lib/utils');
 
 function checkReturnCode(childProcess, done) {
   childProcess.on('close', function (code) {
@@ -40,7 +26,8 @@ describe('git([options])', function () {
     it('runs the git executable with the specified arguments', function (done) {
       var g = git();
       var cp = g.run('--version');
-      collectStdout(cp, function (stdout) {
+      utils.collectStream(cp.stdout, function (buffer) {
+        var stdout = buffer.toString();
         expect(stdout).to.contain('git version');
       });
       checkReturnCode(cp, done);
@@ -49,7 +36,8 @@ describe('git([options])', function () {
     it('flattens object and array arguments', function (done) {
       var g = git();
       var cp = g.run({version: true});
-      collectStdout(cp, function (stdout) {
+      utils.collectStream(cp.stdout, function (buffer) {
+        var stdout = buffer.toString();
         expect(stdout).to.contain('git version');
       });
       checkReturnCode(cp, done);
@@ -59,8 +47,9 @@ describe('git([options])', function () {
       var g = git({config: { 'test.test': true }});
       var cp = g.run('config', '--get', 'test.test');
 
-      collectStdout(cp, function (stdout) {
-        expect(stdout.trim()).to.be('true');
+      utils.collectStream(cp.stdout, function (buffer) {
+        var stdout = buffer.toString().trim();
+        expect(stdout).to.equal('true');
       });
       checkReturnCode(cp, done);
     });
@@ -71,8 +60,9 @@ describe('git([options])', function () {
       var g = git({gitdir: gitdir});
       var cp = g.run('config', '--get', 'submodule.submodule.url');
 
-      collectStdout(cp, function (stdout) {
-        expect(stdout.trim()).to.be(path.resolve(origin));
+      utils.collectStream(cp.stdout, function (buffer) {
+        var stdout = buffer.toString().trim();
+        expect(stdout).to.equal(path.resolve(origin));
       });
       checkReturnCode(cp, done);
     });
@@ -82,10 +72,46 @@ describe('git([options])', function () {
       var g = git({worktree: worktree});
       var cp = g.run('rev-parse', '--show-toplevel');
 
-      collectStdout(cp, function (stdout) {
-        expect(stdout.trim()).to.equal(path.resolve(worktree));
+      utils.collectStream(cp.stdout, function (buffer) {
+        var stdout = buffer.toString().trim();
+        expect(stdout).to.equal(path.resolve(worktree));
       });
       checkReturnCode(cp, done);
+    });
+
+  });
+
+  describe('.checkout(revision, cb)', function () {
+    'use strict';
+
+    var fixture;
+    var g;
+
+    beforeEach(function (done) {
+      fixtures.temporary(function (err, tmp) {
+        fixture = tmp;
+        g = git({gitdir: fixture.gitdir, worktree: fixture.worktree});
+        done(err);
+      });
+    });
+
+    afterEach(function (done) {
+      if (fixture) {
+        fixture.remove(done);
+      }
+    });
+
+    describe('when called with a revision and callback', function () {
+
+      it('checks out the given revision from the repository into the work tree', function (done) {
+        var commit = fixture.tags['v1.0.0'];
+        g.checkout(commit, function (err) {
+          var file = fs.readFileSync(fixture.worktree + '/file').toString().trim();
+          expect(file).to.equal('1.0.0');
+          done(err);
+        });
+      });
+
     });
 
   });

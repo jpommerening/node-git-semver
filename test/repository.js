@@ -1,5 +1,3 @@
-/*global describe, it, beforeEach*/
-
 var expect = require('expect.js');
 var path = require('path');
 var semver = require('semver');
@@ -273,6 +271,28 @@ describe('repository([options|cwd], [callback])', function () {
       repo.versions('<1.0.0', function (err, versions) {
         expect(versions['0.1.0']).to.not.be(undefined);
         expect(versions['1.0.0']).to.be(undefined);
+        done(err);
+      });
+    });
+  });
+
+  describe('.latest([range], [callback])', function () {
+    var fixture = fixtures.repository;
+    var tags = fixture.tags;
+    var repo;
+
+    beforeEach(function (done) {
+      repo = repository(fixture.worktree, done);
+    });
+
+    it('returns a Reference instance', function (done) {
+      var ref = repo.latest(done);
+      expect(ref).to.be.a(reference.Reference);
+    });
+
+    it('points the returned Reference instance to the latest version matching the given range', function (done) {
+      repo.latest('0.x', function (err, ref) {
+        expect(ref.commit).to.equal(tags['v0.2.1']);
         done(err);
       });
     });
