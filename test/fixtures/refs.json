@@ -1,5 +1,5 @@
 {
-  "HEAD": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7",
+  "HEAD": "fdfd7215393494636cef35eca25eba19eefbd9a8",
   "tags": {
     "v0.0.1": "255d434cb862dc4675aa80bee124d78c293ba7e9",
     "v0.0.2": "25df29a96117a5ec1ae540edbaddbcc0a3624afd",
@@ -21,6 +21,6 @@
     "v1.3.1": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
   },
   "heads": {
-    "master": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
+    "master": "fdfd7215393494636cef35eca25eba19eefbd9a8"
   }
 }

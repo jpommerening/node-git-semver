@@ -82,7 +82,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.checkout(revision, cb)', function () {
+  describe('.checkout(revision, [args...], cb)', function () {
 
     var fixture;
     var g;
@@ -102,7 +102,6 @@ describe('git([options])', function () {
     });
 
     describe('when called with a revision and callback', function () {
-
       it('checks out the given revision from the repository into the work tree', function (done) {
         var commit = fixture.tags['v1.0.0'];
         g.checkout(commit, function (err) {
@@ -112,6 +111,151 @@ describe('git([options])', function () {
         });
       });
 
+      it('passes a result structure to the callback', function (done) {
+        g.checkout('HEAD', function (err, result) {
+          expect(result.args).to.eql(['checkout', 'HEAD']);
+          expect(result.code).to.equal(0);
+          expect(result.stdout).to.equal('');
+          expect(result.stderr).to.equal('');
+          done(err);
+        });
+      });
+    });
+
+    describe('when called with more arguments', function () {
+      it('passes them to git', function (done) {
+        g.checkout('-b', 'test', function (err, result) {
+          expect(result.args).to.eql(['checkout', '-b', 'test']);
+          done(err);
+        });
+      });
+    });
+
+    describe('when git returns an error', function () {
+      it('passes an Error object to the callback', function (done) {
+        g.checkout('-fail', function (err) {
+          expect(err).to.be.an(Error);
+          done();
+        });
+      });
+    });
+
+  });
+
+  describe('.tag(name, [args...], cb)', function () {
+
+    var fixture;
+    var g;
+
+    beforeEach(function (done) {
+      fixtures.temporary(function (err, tmp) {
+        fixture = tmp;
+        g = git({gitdir: fixture.gitdir, worktree: fixture.worktree});
+        done(err);
+      });
+    });
+
+    afterEach(function (done) {
+      if (fixture) {
+        fixture.remove(done);
+      }
+    });
+
+    describe('when called with a name and callback', function () {
+      it('creates the given tag the current HEAD', function (done) {
+        g.tag('test', function (err) {
+          var file = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
+          expect(file).to.equal(fixture.HEAD);
+          done(err);
+        });
+      });
+
+      it('passes a result structure to the callback', function (done) {
+        g.tag('test', function (err, result) {
+          expect(result.args).to.eql(['tag', 'test']);
+          expect(result.code).to.equal(0);
+          expect(result.stdout).to.equal('');
+          expect(result.stderr).to.equal('');
+          done(err);
+        });
+      });
+    });
+
+    describe('when called with more arguments', function () {
+      it('passes them to git', function (done) {
+        g.tag('-a', 'test', '-m', 'test message', function (err, result) {
+          expect(result.args).to.eql(['tag', '-a', 'test', '-m', 'test message']);
+          done(err);
+        });
+      });
+    });
+
+    describe('when git returns an error', function () {
+      it('passes an Error object to the callback', function (done) {
+        g.tag('-fail', function (err) {
+          expect(err).to.be.an(Error);
+          done();
+        });
+      });
+    });
+
+  });
+
+  describe('.branch(name, [args...], cb)', function () {
+
+    var fixture;
+    var g;
+
+    beforeEach(function (done) {
+      fixtures.temporary(function (err, tmp) {
+        fixture = tmp;
+        g = git({gitdir: fixture.gitdir, worktree: fixture.worktree});
+        done(err);
+      });
+    });
+
+    afterEach(function (done) {
+      if (fixture) {
+        fixture.remove(done);
+      }
+    });
+
+    describe('when called with a name and callback', function () {
+      it('creates the given branch the current HEAD', function (done) {
+        g.branch('test', function (err) {
+          var file = fs.readFileSync(fixture.gitdir + '/refs/heads/test').toString().trim();
+          expect(file).to.equal(fixture.HEAD);
+          done(err);
+        });
+      });
+
+      it('passes a result structure to the callback', function (done) {
+        g.branch('test', function (err, result) {
+          expect(result.args).to.eql(['branch', 'test']);
+          expect(result.code).to.equal(0);
+          expect(result.stdout).to.equal('');
+          expect(result.stderr).to.equal('');
+          done(err);
+        });
+      });
+    });
+
+    describe('when called with more arguments', function () {
+      it('passes them to git', function (done) {
+        g.branch('test', 'v1.0.0', function (err, result) {
+          expect(result.args).to.eql(['branch', 'test', 'v1.0.0']);
+          done(err);
+        });
+      });
+    });
+
+    describe('when git returns an error', function () {
+      it('passes an Error object to the callback', function (done) {
+        g.branch('-fail', function (err) {
+          expect(err).to.be.an(Error);
+          done();
+        });
+      });
     });
 
   });
