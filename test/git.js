@@ -181,8 +181,6 @@ describe('git([options])', function () {
           expect.not(err);
           expect(result.args).to.eql(['tag', 'test']);
           expect(result.code).to.equal(0);
-          expect(result.stdout).to.equal('');
-          expect(result.stderr).to.equal('');
           done(err);
         });
       });
@@ -243,8 +241,6 @@ describe('git([options])', function () {
           expect.not(err);
           expect(result.args).to.eql(['branch', 'test']);
           expect(result.code).to.equal(0);
-          expect(result.stdout).to.equal('');
-          expect(result.stderr).to.equal('');
           done(err);
         });
       });
