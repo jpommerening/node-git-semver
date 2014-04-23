@@ -31,7 +31,7 @@ module.exports = function (grunt) {
     }, function (err, result, code) {
       grunt.log.debug(result.stdout + '\n');
       if (code) {
-        grunt.log(result.stderr + '\n');
+        grunt.log.writeln(result.stderr);
         err = new Error('git ' + args.join(' ') + ' returned ' + code);
       }
       if (err) {
