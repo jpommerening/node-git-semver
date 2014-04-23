@@ -2,8 +2,51 @@
 
 > Manage git repositories with semantic versioning
 
-`git-semver` is a node module (and command line program)
-for managing git repositories using semantic versioning.
+`git-semver` is a node module (and command line program) for managing git
+repositories using semantic versioning. It's basically just a nice git API
+that understands [semantic versioning](semver.org).
+
+## Example
+
+Open a local repository, select the latest tag that
+[matches](https://www.npmjs.org/package/semver) "~1.1.8" and
+check it's contents out into the repository's work tree.
+
+```javascript
+var git = require('git-semver');
+
+git.repository('path/to/repository')
+  .latest('~1.1.8')
+  .checkout(function (err, ref) {
+    if (err) {
+      console.log(err);
+      process.exit(1);
+    }
+  });
+```
+
+## API
+
+The API is built around [events](http://nodejs.org/api/events.html) and
+[streams](http://nodejs.org/api/stream.html). Most methods return a stream
+and accept an optional callback that fires once the underlying stream
+finishes or raises an error.
+
+This allows for succinct code, that chains multiple methods (hello
+[demeter](http://en.wikipedia.org/wiki/Law_of_Demeter)) synchronously and
+waits until the asynchronous operations finish.
+
+### Class git.Git
+
+### Class: git.Repository
+
+### Class: git.Config
+
+### Class: git.Reference
+
+### Class: git.Refs
+
+### Class: git.Versions
 
 ## [License](LICENSE-MIT)
 
