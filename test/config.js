@@ -17,8 +17,10 @@ describe('config([options|file], [callback])', function () {
   it('emits configuration entries as \'entry\' events', function (done) {
     var entry = {};
     config(function (err) {
-      expect(entry.key).to.not.be(undefined);
-      expect(entry.value).to.not.be(undefined);
+      if (!err) {
+        expect(entry.key).to.not.be(undefined);
+        expect(entry.value).to.not.be(undefined);
+      }
       done(err);
     }).on('entry', function (key, value) {
       entry.key = key;

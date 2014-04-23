@@ -2,10 +2,6 @@ var expect = require('expect.js');
 var path = require('path');
 var semver = require('semver');
 
-expect.not = function (what) {
-  return expect(what).to.not.be.ok();
-};
-
 describe('repository([options|cwd], [callback])', function () {
 
   'use strict';
@@ -148,16 +144,18 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Config instance with configuration entries', function (done) {
       repo.config(function (err, cfg) {
-        expect.not(err);
-        expect(cfg[key]).to.equal(value);
+        if (!err) {
+          expect(cfg[key]).to.equal(value);
+        }
         done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var cfg = repository(fixture.worktree).config(function (err, cfg) {
-        expect.not(err);
-        expect(cfg[key]).to.equal(value);
+        if (!err) {
+          expect(cfg[key]).to.equal(value);
+        }
         done(err);
       });
       expect(cfg[key]).to.be(undefined);
@@ -180,8 +178,9 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('points the returned Reference instance to the repository\'s HEAD', function (done) {
       repo.HEAD(function (err, ref) {
-        expect.not(err);
-        expect(ref.commit).to.equal(commit);
+        if (!err) {
+          expect(ref.commit).to.equal(commit);
+        }
         done(err);
       });
     });
@@ -204,16 +203,18 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Refs instance with the repository\'s tags', function (done) {
       repo.tags(function (err, tags) {
-        expect.not(err);
-        expect(tags[tag]).to.equal(commit);
+        if (!err) {
+          expect(tags[tag]).to.equal(commit);
+        }
         done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var tags = repository(fixture.worktree).tags(function (err, tags) {
-        expect.not(err);
-        expect(tags[tag]).to.equal(commit);
+        if (!err) {
+          expect(tags[tag]).to.equal(commit);
+        }
         done(err);
       });
       expect(tags[tag]).to.be(undefined);
@@ -237,16 +238,18 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Refs instance with the repository\'s branches', function (done) {
       repo.heads(function (err, heads) {
-        expect.not(err);
-        expect(heads[head]).to.match(commit);
+        if (!err) {
+          expect(heads[head]).to.match(commit);
+        }
         done(err);
       });
     });
 
     it('can be called before the repository is initialized', function (done) {
       var heads = repository(fixture.worktree).heads(function (err, heads) {
-        expect.not(err);
-        expect(heads[head]).to.match(commit);
+        if (!err) {
+          expect(heads[head]).to.match(commit);
+        }
         done(err);
       });
       expect(heads[head]).to.be(undefined);
@@ -269,11 +272,12 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('populates the returned Versions instance with semantic versions', function (done) {
       repo.versions(function (err, versions) {
-        expect.not(err);
-        for (var tag in tags) {
-          var parsed = semver.parse(tag);
-          var v = parsed.version + (parsed.build.length ? '+' + parsed.build.join('.') : '');
-          expect(versions[v]).to.equal(tags[tag]);
+        if (!err) {
+          for (var tag in tags) {
+            var parsed = semver.parse(tag);
+            var v = parsed.version + (parsed.build.length ? '+' + parsed.build.join('.') : '');
+            expect(versions[v]).to.equal(tags[tag]);
+          }
         }
         done(err);
       });
@@ -281,9 +285,10 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('filters according to semantic version ranges', function (done) {
       repo.versions('<1.0.0', function (err, versions) {
-        expect.not(err);
-        expect(versions['0.1.0']).to.not.be(undefined);
-        expect(versions['1.0.0']).to.be(undefined);
+        if (!err) {
+          expect(versions['0.1.0']).to.not.be(undefined);
+          expect(versions['1.0.0']).to.be(undefined);
+        }
         done(err);
       });
     });
@@ -305,8 +310,9 @@ describe('repository([options|cwd], [callback])', function () {
 
     it('points the returned Reference instance to the latest version matching the given range', function (done) {
       repo.latest('0.x', function (err, ref) {
-        expect.not(err);
-        expect(ref.commit).to.equal(tags['v0.2.1']);
+        if (!err) {
+          expect(ref.commit).to.equal(tags['v0.2.1']);
+        }
         done(err);
       });
     });

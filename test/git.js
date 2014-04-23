@@ -3,10 +3,6 @@ var path = require('path');
 var fs = require('fs');
 var utils = require('../lib/utils');
 
-expect.not = function (what) {
-  return expect(what).not.to.be.ok();
-};
-
 function checkReturnCode(childProcess, done) {
   childProcess.on('close', function (code) {
     expect(code).to.be(0);
@@ -109,18 +105,20 @@ describe('git([options])', function () {
       it('checks out the given revision from the repository into the work tree', function (done) {
         var commit = fixture.tags['v1.0.0'];
         g.checkout(commit, function (err) {
-          expect.not(err);
-          var file = fs.readFileSync(fixture.worktree + '/file').toString().trim();
-          expect(file).to.equal('1.0.0');
+          if (!err) {
+            var file = fs.readFileSync(fixture.worktree + '/file').toString().trim();
+            expect(file).to.equal('1.0.0');
+          }
           done(err);
         });
       });
 
       it('passes a result structure to the callback', function (done) {
         g.checkout('HEAD', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['checkout', 'HEAD']);
-          expect(result.code).to.equal(0);
+          if (!err) {
+            expect(result.args).to.eql(['checkout', 'HEAD']);
+            expect(result.code).to.equal(0);
+          }
           done(err);
         });
       });
@@ -129,8 +127,9 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.checkout('-b', 'test', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['checkout', '-b', 'test']);
+          if (!err) {
+            expect(result.args).to.eql(['checkout', '-b', 'test']);
+          }
           done(err);
         });
       });
@@ -169,18 +168,20 @@ describe('git([options])', function () {
     describe('when called with a name and callback', function () {
       it('creates the given tag the current HEAD', function (done) {
         g.tag('test', function (err) {
-          expect.not(err);
-          var file = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
-          expect(file).to.equal(fixture.HEAD);
+          if (!err) {
+            var file = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
+            expect(file).to.equal(fixture.HEAD);
+          }
           done(err);
         });
       });
 
       it('passes a result structure to the callback', function (done) {
         g.tag('test', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['tag', 'test']);
-          expect(result.code).to.equal(0);
+          if (!err) {
+            expect(result.args).to.eql(['tag', 'test']);
+            expect(result.code).to.equal(0);
+          }
           done(err);
         });
       });
@@ -189,8 +190,9 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.tag('-a', 'test', '-m', 'test message', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['tag', '-a', 'test', '-m', 'test message']);
+          if (!err) {
+            expect(result.args).to.eql(['tag', '-a', 'test', '-m', 'test message']);
+          }
           done(err);
         });
       });
@@ -229,18 +231,20 @@ describe('git([options])', function () {
     describe('when called with a name and callback', function () {
       it('creates the given branch the current HEAD', function (done) {
         g.branch('test', function (err) {
-          expect.not(err);
-          var file = fs.readFileSync(fixture.gitdir + '/refs/heads/test').toString().trim();
-          expect(file).to.equal(fixture.HEAD);
+          if (!err) {
+            var file = fs.readFileSync(fixture.gitdir + '/refs/heads/test').toString().trim();
+            expect(file).to.equal(fixture.HEAD);
+          }
           done(err);
         });
       });
 
       it('passes a result structure to the callback', function (done) {
         g.branch('test', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['branch', 'test']);
-          expect(result.code).to.equal(0);
+          if (!err) {
+            expect(result.args).to.eql(['branch', 'test']);
+            expect(result.code).to.equal(0);
+          }
           done(err);
         });
       });
@@ -249,8 +253,9 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.branch('test', 'v1.0.0', function (err, result) {
-          expect.not(err);
-          expect(result.args).to.eql(['branch', 'test', 'v1.0.0']);
+          if (!err) {
+            expect(result.args).to.eql(['branch', 'test', 'v1.0.0']);
+          }
           done(err);
         });
       });

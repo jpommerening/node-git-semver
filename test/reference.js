@@ -29,7 +29,9 @@ describe('reference([options|commit], [callback])', function () {
   describe('when called with only a callback', function () {
     it('reads the repository\'s HEAD reference', function (done) {
       var ref = reference(function (err) {
-        expect(ref.commit).to.equal(fixtures.repository.HEAD);
+        if (!err) {
+          expect(ref.commit).to.equal(fixtures.repository.HEAD);
+        }
         done(err);
       });
       ref.emit('gitdir', fixtures.repository.gitdir);
