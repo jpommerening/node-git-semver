@@ -93,7 +93,6 @@ describe('git([options])', function () {
 
     beforeEach(function (done) {
       fixtures.temporary(function (err, tmp) {
-        expect.not(err);
         fixture = tmp;
         g = git({gitdir: fixture.gitdir, worktree: fixture.worktree});
         done(err);
@@ -122,8 +121,6 @@ describe('git([options])', function () {
           expect.not(err);
           expect(result.args).to.eql(['checkout', 'HEAD']);
           expect(result.code).to.equal(0);
-          expect(result.stdout).to.equal('');
-          expect(result.stderr).to.equal('');
           done(err);
         });
       });
@@ -172,6 +169,7 @@ describe('git([options])', function () {
     describe('when called with a name and callback', function () {
       it('creates the given tag the current HEAD', function (done) {
         g.tag('test', function (err) {
+          expect.not(err);
           var file = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
           expect(file).to.equal(fixture.HEAD);
           done(err);
@@ -180,6 +178,7 @@ describe('git([options])', function () {
 
       it('passes a result structure to the callback', function (done) {
         g.tag('test', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['tag', 'test']);
           expect(result.code).to.equal(0);
           expect(result.stdout).to.equal('');
@@ -192,6 +191,7 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.tag('-a', 'test', '-m', 'test message', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['tag', '-a', 'test', '-m', 'test message']);
           done(err);
         });
@@ -231,6 +231,7 @@ describe('git([options])', function () {
     describe('when called with a name and callback', function () {
       it('creates the given branch the current HEAD', function (done) {
         g.branch('test', function (err) {
+          expect.not(err);
           var file = fs.readFileSync(fixture.gitdir + '/refs/heads/test').toString().trim();
           expect(file).to.equal(fixture.HEAD);
           done(err);
@@ -239,6 +240,7 @@ describe('git([options])', function () {
 
       it('passes a result structure to the callback', function (done) {
         g.branch('test', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['branch', 'test']);
           expect(result.code).to.equal(0);
           expect(result.stdout).to.equal('');
@@ -251,6 +253,7 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.branch('test', 'v1.0.0', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['branch', 'test', 'v1.0.0']);
           done(err);
         });
