@@ -5,6 +5,7 @@ var which = require('which');
 var async = require('async');
 
 module.exports = function (grunt) {
+  'use strict';
 
   var root = path.dirname(__dirname) + '/';
   var git = which.sync('git');
@@ -30,6 +31,7 @@ module.exports = function (grunt) {
     }, function (err, result, code) {
       grunt.log.debug(result.stdout + '\n');
       if (code) {
+        grunt.log(result.stderr + '\n');
         err = new Error('git ' + args.join(' ') + ' returned ' + code);
       }
       if (err) {
@@ -56,7 +58,7 @@ module.exports = function (grunt) {
 
     var opts = {cwd: repository};
 
-    rungit(args, opts, 'Added submodule ' + remote + 'in ' + repository + '/' + sub, function (err) {
+    rungit(args, opts, 'Added submodule ' + remote + ' in ' + repository + '/' + sub, function (err) {
       if (err) {
         return cb(err);
       }
