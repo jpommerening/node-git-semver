@@ -66,10 +66,25 @@ module.exports = function (grunt) {
     });
   }
 
-  grunt.registerTask('fixtures', function() {
+  function configure(repository, config, cb) {
+    var args = [ 'config', '--local' ];
+    var opts = {cwd: repository};
+
+    function set(key) {
+      return function (cb) {
+        var value = config[key];
+        rungit(args.concat([key, value]), opts, 'Setup git config in ' + repository, cb);
+      };
+    }
+
+    async.series(Object.keys(config).map(set), cb);
+  }
+
+  grunt.registerTask('fixtures', function () {
     var done = this.async();
 
     var fixtures = grunt.file.readJSON('test/fixtures/repositories.json');
+    var config = grunt.file.readJSON('test/fixtures/config.json');
 
     function step(fn) {
       var args = [].slice.call(arguments, 1);
@@ -84,6 +99,8 @@ module.exports = function (grunt) {
       step(extract, fixtures.remote.extract, fixtures.remote.gitdir),
       step(clone, fixtures.remote.gitdir, fixtures.repository.worktree, false),
       step(clone, fixtures.remote.gitdir, fixtures.bare.gitdir, true),
+      step(configure, fixtures.repository.gitdir, config),
+      step(configure, fixtures.bare.gitdir, config),
       step(submodule, fixtures.remote.gitdir, fixtures.repository.worktree, fixtures.submodule.worktree)
     ], done);
   });
