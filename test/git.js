@@ -3,6 +3,10 @@ var path = require('path');
 var fs = require('fs');
 var utils = require('../lib/utils');
 
+expect.not = function (what) {
+  return expect(what).not.to.be.ok();
+};
+
 function checkReturnCode(childProcess, done) {
   childProcess.on('close', function (code) {
     expect(code).to.be(0);
@@ -89,6 +93,7 @@ describe('git([options])', function () {
 
     beforeEach(function (done) {
       fixtures.temporary(function (err, tmp) {
+        expect.not(err);
         fixture = tmp;
         g = git({gitdir: fixture.gitdir, worktree: fixture.worktree});
         done(err);
@@ -105,6 +110,7 @@ describe('git([options])', function () {
       it('checks out the given revision from the repository into the work tree', function (done) {
         var commit = fixture.tags['v1.0.0'];
         g.checkout(commit, function (err) {
+          expect.not(err);
           var file = fs.readFileSync(fixture.worktree + '/file').toString().trim();
           expect(file).to.equal('1.0.0');
           done(err);
@@ -113,6 +119,7 @@ describe('git([options])', function () {
 
       it('passes a result structure to the callback', function (done) {
         g.checkout('HEAD', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['checkout', 'HEAD']);
           expect(result.code).to.equal(0);
           expect(result.stdout).to.equal('');
@@ -125,6 +132,7 @@ describe('git([options])', function () {
     describe('when called with more arguments', function () {
       it('passes them to git', function (done) {
         g.checkout('-b', 'test', function (err, result) {
+          expect.not(err);
           expect(result.args).to.eql(['checkout', '-b', 'test']);
           done(err);
         });

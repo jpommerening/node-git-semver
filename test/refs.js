@@ -1,5 +1,9 @@
 var expect = require('expect.js');
 
+expect.not = function (what) {
+  return expect(what).not.to.be.ok();
+};
+
 describe('refs([options|path], [callback])', function () {
 
   'use strict';
@@ -17,6 +21,7 @@ describe('refs([options|path], [callback])', function () {
   it('emits found references entries as \'entry\' events', function (done) {
     var entry = {};
     refs({ gitdir: fixture.gitdir }, function (err) {
+      expect.not(err);
       expect(entry.name).to.not.be(undefined);
       expect(entry.commit).to.not.be(undefined);
       done(err);
@@ -30,6 +35,7 @@ describe('refs([options|path], [callback])', function () {
     it('waits for a \'gitdir\' event before reading refs', function (done) {
       var called = false;
       var rfs = refs(function (err) {
+        expect.not(err);
         expect(called).to.be(true);
         done(err);
       }).on('entry', function () {
@@ -48,6 +54,7 @@ describe('refs([options|path], [callback])', function () {
   describe('when called with only a callback', function () {
     it('reads all available refs as references', function (done) {
       refs(function (err, rfs) {
+        expect.not(err);
         for (var tag in fixture.tags) {
           expect(rfs['refs/tags/' + tag]).to.equal(fixture.tags[tag]);
         }
@@ -60,6 +67,7 @@ describe('refs([options|path], [callback])', function () {
 
     it('reads the refs at the given path', function (done) {
       refs('refs/tags', function (err, rfs) {
+        expect.not(err);
         for (var tag in fixture.tags) {
           expect(rfs[tag]).to.equal(fixture.tags[tag]);
         }
