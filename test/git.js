@@ -193,6 +193,7 @@ describe('git([options])', function () {
           if (!err) {
             expect(result.args).to.eql(['tag', '-a', 'test', '-m', 'test message']);
           }
+          console.log(err.stderr, err.stdout);
           done(err);
         });
       });
