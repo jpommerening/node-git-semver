@@ -59,7 +59,7 @@ repositories.temporary = function (callback) {
     git('clone', source.gitdir),
     function (callback) {
       async.series(Object.keys(source.config).map(function (key) {
-        return git('config', key, source.config[key]);
+        return git('config', '--file=' + worktree + '/.git/config', key, source.config[key]);
       }), callback);
     },
     function (results, callback) {
