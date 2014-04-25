@@ -9,6 +9,7 @@ var refs = require('./refs');
 var config = require('./config');
 var root = path.join(__dirname, '../..');
 
+
 for (var name in repositories) {
   repositories[name].tags = refs.tags;
   repositories[name].heads = refs.heads;
@@ -48,8 +49,10 @@ repositories.temporary = function (callback) {
   var worktree;
 
   return async.waterfall([
-    tmp.dir,
-    function(tmpdir, callback) {
+    function (callback) {
+      tmp.dir({dir: path.resolve(root, 'tmp')}, callback);
+    },
+    function (tmpdir, callback) {
       worktree = tmpdir;
       callback(null, worktree);
     },
