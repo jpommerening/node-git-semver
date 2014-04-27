@@ -17,12 +17,14 @@
   },
   "main": "lib",
   "scripts": {
-    "test": "grunt test jshint"
+    "test": "grunt test jshint",
+    "postinstall": "node warn.js"
   },
   "dependencies": {
-    "semver": "~2.2.1",
-    "findup": "~0.1.5",
     "async": "~0.7.0",
+    "colors": "^0.6.2",
+    "findup": "~0.1.5",
+    "semver": "~2.2.1",
     "which": "~1.0.5"
   },
   "devDependencies": {
