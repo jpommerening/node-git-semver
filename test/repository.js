@@ -318,4 +318,46 @@ describe('repository([options|cwd], [callback])', function () {
     });
   });
 
+  describe('.checkout([reference], [options], [callback])', function () {
+    var fixture;
+    var repo;
+
+    beforeEach(function (done) {
+      fixtures.temporary(function (err, tmp) {
+        if (err) {
+          return done(err);
+        }
+        fixture = tmp;
+        repo = repository(fixture.worktree, done);
+      });
+    });
+
+    afterEach(function (done) {
+      fixture.remove(done);
+    });
+
+    it('returns a Repository instance', function (done) {
+      expect(repo.checkout(done)).to.be.a(repository.Repository);
+    });
+
+    it('checks out the reference in the given worktree', function (done) {
+      done();
+    });
+  });
+
+  describe('.tag([reference], name|options, [callback])', function () {
+    it('creates a new tag pointing to the reference');
+    it('returns a Repository instance');
+  });
+
+  describe('.branch([reference], name|options, [callback])', function () {
+    it('creates a new branch pointing to the reference');
+    it('returns a Repository instance');
+  });
+
+  describe('.merge(reference, [options], [callback])', function () {
+    it('merges the given reference into the repository\'s HEAD');
+    it('returns a Repository instance');
+  });
+
 });

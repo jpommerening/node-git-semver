@@ -157,4 +157,70 @@ describe('utils', function () {
 
   });
 
+  describe('.aggregateEvents(emitter, event, [event, ...], callback)', function () {
+
+    var EventEmitter = require('events').EventEmitter;
+
+    it('returns the emitter', function () {
+      var emitter = new EventEmitter();
+      expect(utils.aggregateEvents(emitter, 'event', function () {})).to.be(emitter);
+    });
+
+    it('calls the given callback once all named events appeared', function (done) {
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.aggregateEvents(emitter, 'event1', 'event2', function () {
+        emitter.emit('end');
+      });
+      emitter.emit('event1');
+      emitter.emit('event2');
+    });
+
+    it('passes the event payload to the given callback', function (done) {
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.aggregateEvents(emitter, 'event1', 'event2', function (data1a, data1b, data2) {
+        expect(data1a).to.be(1);
+        expect(data1b).to.be('b');
+        expect(data2).to.be(2);
+        emitter.emit('end');
+      });
+      emitter.emit('event1', 1, 'b');
+      emitter.emit('event2', 2);
+    });
+
+    it('calls the callback with the first payload the appeared', function (done) {
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.aggregateEvents(emitter, 'event1', 'event2', function (data) {
+        expect(data).to.be(1);
+        emitter.emit('end');
+      });
+      emitter.emit('event1', 1);
+      emitter.emit('event1', 2);
+      emitter.emit('event1', 3);
+      emitter.emit('event2');
+    });
+
+    it('calls the callback only once', function (done) {
+      var emitter = new EventEmitter().once('error', done);
+      var called = 0;
+
+      utils.aggregateEvents(emitter, 'event1', 'event2', function () {
+        called++;
+      });
+      emitter.emit('event1');
+      emitter.emit('event2');
+      emitter.emit('event1');
+      emitter.emit('event2');
+
+      emitter.once('end', function () {
+        expect(called).to.be(1);
+        done();
+      });
+      emitter.emit('end');
+    });
+
+  });
+
 });
