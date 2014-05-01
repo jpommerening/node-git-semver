@@ -71,4 +71,90 @@ describe('utils', function () {
 
   });
 
+  describe('.latchEvents(emitter, event, [event, ...] )', function () {
+
+    var EventEmitter = require('events').EventEmitter;
+
+    it('returns the emitter', function () {
+      var emitter = new EventEmitter();
+      expect(utils.latchEvents(emitter, 'event')).to.be(emitter);
+    });
+
+    it('records the given events and triggers them when listeners are attached', function (done) {
+      var called = false;
+      var emitter = new EventEmitter().once('error', done);
+
+      utils.latchEvents(emitter, 'event');
+      emitter.emit('event');
+      emitter.on('event', function () {
+        called = true;
+        emitter.emit('end');
+      });
+
+      emitter.once('end', function () {
+        expect(called).to.be(true);
+        done();
+      });
+    });
+
+    it('calls new listeners asynchronously', function (done) {
+      var called = false;
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.latchEvents(emitter, 'event');
+      emitter.emit('event');
+      emitter.on('event', function () {
+        called = true;
+        emitter.emit('end');
+      });
+      expect(called).to.be(false);
+    });
+
+    it('records the event payload', function (done) {
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.latchEvents(emitter, 'event');
+      emitter.emit('event', 1, 2, 3);
+      emitter.on('event', function () {
+        expect([].slice.apply(arguments)).to.eql([1, 2, 3]);
+        emitter.emit('end');
+      });
+    });
+
+    it('does not call listeners attached with "once" more than once', function (done) {
+      var called = 0;
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.latchEvents(emitter, 'event');
+      emitter.emit('event');
+      emitter.once('event', function () {
+        expect(called++).to.be(0);
+        process.nextTick(function () {
+          emitter.emit('end');
+        });
+      });
+    });
+
+    it('does NOT keep the order of events', function (done) {
+      var called = false;
+      var emitter = new EventEmitter().once('error', done).once('end', done);
+
+      utils.latchEvents(emitter, 'event');
+      emitter.emit('event');
+      emitter.on('event', function () {
+        expect(called).to.be(true);
+        called = true;
+        emitter.emit('end');
+      });
+      emitter.on('event2', function () {
+        expect(called).to.be(false);
+        called = true;
+      });
+
+      /* event2 is emitted BEFORE event */
+      emitter.emit('event2');
+    });
+
+  });
+
 });

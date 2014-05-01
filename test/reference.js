@@ -38,19 +38,4 @@ describe('reference([options|commit], [callback])', function () {
     });
   });
 
-  describe('.checkout(worktree, [callback])', function () {
-    it('checks out the reference in the given worktree');
-    it('returns a Reference instance');
-  });
-
-  describe('.tag([name|options], [callback])', function () {
-    it('creates a new tag pointing to the commit');
-    it('returns a Reference instance');
-  });
-
-  describe('.branch([name|options], [callback])', function () {
-    it('creates a new branch pointing to the commit');
-    it('returns a Reference instance');
-  });
-
 });

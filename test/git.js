@@ -96,9 +96,7 @@ describe('git([options])', function () {
     });
 
     afterEach(function (done) {
-      if (fixture) {
-        fixture.remove(done);
-      }
+      fixture.remove(done);
     });
 
     describe('when called with a revision and callback', function () {
@@ -160,9 +158,7 @@ describe('git([options])', function () {
     });
 
     afterEach(function (done) {
-      if (fixture) {
-        fixture.remove(done);
-      }
+      fixture.remove(done);
     });
 
     describe('when called with a name and callback', function () {
@@ -223,9 +219,7 @@ describe('git([options])', function () {
     });
 
     afterEach(function (done) {
-      if (fixture) {
-        fixture.remove(done);
-      }
+      fixture.remove(done);
     });
 
     describe('when called with a name and callback', function () {
