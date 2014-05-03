@@ -223,4 +223,71 @@ describe('utils', function () {
 
   });
 
+  describe('.pipeEvents(from, event, [event, ...], to)', function () {
+
+    var EventEmitter = require('events').EventEmitter;
+
+    it('returns the target emitter', function (done) {
+      var source = new EventEmitter().once('error', done);
+      var target = new EventEmitter().once('error', done);
+
+      var emitter = utils.pipeEvents(source, 'event1', 'event2', target);
+      expect(emitter).to.be(target);
+      done();
+    });
+
+    it('listens for the given events on the source emitter', function (done) {
+      var source = new EventEmitter().once('error', done);
+      var target = new EventEmitter().once('error', done);
+
+      utils.pipeEvents(source, 'event1', 'event2', target);
+
+      expect(source.listeners('event1')).to.not.be.empty();
+      expect(source.listeners('event2')).to.not.be.empty();
+      done();
+    });
+
+    it('pipes the given events and their payload to the source emitter', function (done) {
+      var source = new EventEmitter().once('error', done);
+      var target = new EventEmitter().once('error', done);
+      var called = false;
+
+      utils.pipeEvents(source, 'event', 'end', target);
+
+      target.on('event', function () {
+        expect([].slice.apply(arguments)).to.eql([1, 2, 3]);
+        called = true;
+      });
+
+      target.on('end', function () {
+        expect(called).to.be(true);
+        done();
+      });
+
+      source.emit('event', 1, 2, 3);
+      source.emit('end');
+    });
+
+  });
+
+  describe('.pipeEvents.once(from, event, [event, ...], to)', function () {
+
+    var EventEmitter = require('events').EventEmitter;
+
+    it('removes the listeners once the events appeared', function (done) {
+      var source = new EventEmitter().once('error', done);
+      var target = new EventEmitter().once('error', done);
+
+      utils.pipeEvents.once(source, 'event1', 'event2', target);
+
+      source.emit('event1');
+      source.emit('event2');
+
+      expect(source.listeners('event1')).to.be.empty();
+      expect(source.listeners('event2')).to.be.empty();
+      done();
+    });
+
+  });
+
 });
