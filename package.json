@@ -1,6 +1,6 @@
 {
   "name": "git-semver",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Manage semantically versioned git repositories",
   "license": "MIT",
   "repository": {
