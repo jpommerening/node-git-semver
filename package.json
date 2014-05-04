@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "async": "~0.7.0",
+    "minimatch": "^0.2.14",
     "semver": "~2.2.1",
     "which": "~1.0.5"
   },
