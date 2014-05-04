@@ -17,7 +17,7 @@ describe('versions([options|range], [callback])', function () {
 
   it('resolves all available versions as references', function (done) {
     versions({gitdir: fixture.gitdir}, function (err, vrs) {
-      expect(vrs['1.0.0']).to.equal(fixture.tags['v1.0.0']);
+      expect(vrs['1.0.0'].commit).to.equal(fixture.tags['v1.0.0']);
       done(err);
     });
   });

@@ -276,7 +276,7 @@ describe('repository([options|cwd], [callback])', function () {
           for (var tag in tags) {
             var parsed = semver.parse(tag);
             var v = parsed.version + (parsed.build.length ? '+' + parsed.build.join('.') : '');
-            expect(versions[v]).to.equal(tags[tag]);
+            expect(versions[v].commit).to.equal(tags[tag]);
           }
         }
         done(err);

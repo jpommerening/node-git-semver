@@ -15,16 +15,15 @@ describe('refs([options|path], [callback])', function () {
   });
 
   it('emits found references entries as \'entry\' events', function (done) {
-    var entry = {};
+    var entry;
     refs({gitdir: fixture.gitdir}, function (err) {
       if (!err) {
         expect(entry.name).to.not.be(undefined);
         expect(entry.commit).to.not.be(undefined);
       }
       done(err);
-    }).on('entry', function (name, commit) {
-      entry.name = name;
-      entry.commit = commit;
+    }).on('entry', function (e) {
+      entry = e;
     });
   });
 
