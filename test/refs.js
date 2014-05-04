@@ -9,14 +9,14 @@ describe('refs([options|path], [callback])', function () {
   var refs = require('../lib/refs');
 
   it('returns a lazily populated Refs instance', function (done) {
-    var rfs = refs({ gitdir: fixture.gitdir }, done);
+    var rfs = refs({gitdir: fixture.gitdir}, done);
     expect(rfs).to.be.a(refs.Refs);
     expect(rfs['refs/heads/master']).to.be(undefined);
   });
 
   it('emits found references entries as \'entry\' events', function (done) {
     var entry = {};
-    refs({ gitdir: fixture.gitdir }, function (err) {
+    refs({gitdir: fixture.gitdir}, function (err) {
       if (!err) {
         expect(entry.name).to.not.be(undefined);
         expect(entry.commit).to.not.be(undefined);

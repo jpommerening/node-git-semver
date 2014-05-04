@@ -45,7 +45,7 @@ describe('git([options])', function () {
     });
 
     it('supplies config options if passed during creation', function (done) {
-      var g = git({config: { 'test.test': true }});
+      var g = git({config: {'test.test': true}});
       var cp = g.run('config', '--get', 'test.test');
 
       utils.collectStream(cp.stdout, function (buffer) {
@@ -82,7 +82,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.checkout(revision, [args...], cb)', function () {
+  describe('.checkout(revision, [args...], callback)', function () {
 
     var fixture;
     var g;
@@ -144,7 +144,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.tag(name, [args...], cb)', function () {
+  describe('.tag(name, [args...], callback)', function () {
 
     var fixture;
     var g;
@@ -205,7 +205,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.branch(name, [args...], cb)', function () {
+  describe('.branch(name, [args...], callback)', function () {
 
     var fixture;
     var g;

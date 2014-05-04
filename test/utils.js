@@ -71,7 +71,7 @@ describe('utils', function () {
 
   });
 
-  describe('.latchEvents(emitter, event, [event, ...] )', function () {
+  describe('.latchEvents(emitter, event, [event, ...])', function () {
 
     var EventEmitter = require('events').EventEmitter;
 
