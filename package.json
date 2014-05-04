@@ -1,11 +1,11 @@
 {
   "name": "git-semver",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Manage semantically versioned git repositories",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jpommerening/git-semver.git"
+    "url": "http://github.com/jpommerening/node-git-semver.git"
   },
   "author": {
     "name": "Jonas Pommerening",
@@ -13,7 +13,7 @@
     "url": "https://npmjs.org/~jpommerening"
   },
   "bugs": {
-    "url": "http://github.com/jpommerening/git-semver/issues"
+    "url": "http://github.com/jpommerening/node-git-semver/issues"
   },
   "main": "lib",
   "scripts": {
@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "async": "~0.7.0",
-    "colors": "~0.6.2",
     "semver": "~2.2.1",
     "which": "~1.0.5"
   },
