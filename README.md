@@ -38,15 +38,57 @@ waits until the asynchronous operations finish.
 
 ### Class git.Git
 
+#### git.run([argument, ...])
+
+#### git.checkout([argument, ...], [callback])
+
+#### git.tag([argument, ...], [callback])
+
+#### git.branch([argument, ...], [callback])
+
+#### git.merge([argument, ...], [callback])
+
 ### Class: git.Repository
+
+#### Event: 'gitdir'
+
+#### Event: 'gitfile'
+
+#### Event: 'worktree'
+
+#### Event: 'end'
 
 ### Class: git.Config
 
+#### Event: 'gitdir'
+
+#### Event: 'entry'
+
+#### Event: 'end'
+
 ### Class: git.Reference
+
+#### Event: 'gitdir'
+
+#### Event: 'commit'
+
+#### Event: 'end'
 
 ### Class: git.Refs
 
+#### Event: 'gitdir'
+
+#### Event: 'entry'
+
+#### Event: 'end'
+
 ### Class: git.Versions
+
+#### Event: 'gitdir'
+
+#### Event: 'entry'
+
+#### Event: 'end'
 
 ## [License](LICENSE-MIT)
 
