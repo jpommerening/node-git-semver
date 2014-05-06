@@ -4,7 +4,7 @@
 
 `git-semver` is a node module (and command line program) for managing git
 repositories using semantic versioning. It's basically just a nice git API
-that understands [semantic versioning](semver.org).
+that understands [semantic versioning][semver].
 
 ## Example
 
@@ -27,100 +27,21 @@ git.repository('path/to/repository')
 
 ## API
 
-The API is built around [events](http://nodejs.org/api/events.html) and
-[streams](http://nodejs.org/api/stream.html). Most methods return a stream
-and accept an optional callback that fires once the underlying stream
-finishes or raises an error.
+The API is built around [events][events] and [streams][stream]. Most methods
+return an event emitter and accept an optional callback that fires once the
+underlying emitter emits an `end` event or raises an error.
 
 This allows for succinct code, that chains multiple methods (hello
 [demeter](http://en.wikipedia.org/wiki/Law_of_Demeter)) synchronously and
 waits until the asynchronous operations finish.
 
-### Class git.Git
+Most operations start from the [repository](doc/api/repository.md) class.
+Once instantiated the repository tries to resolve it's `.git` directory and
+– it its not a "bare" repository – the work tree.
 
-#### git.run([argument, ...])
-
-#### git.checkout([argument, ...], [callback])
-
-#### git.tag([argument, ...], [callback])
-
-#### git.branch([argument, ...], [callback])
-
-#### git.merge([argument, ...], [callback])
-
-### Class: git.Repository
-
-#### Event: 'gitdir'
-
-#### Event: 'gitfile'
-
-#### Event: 'worktree'
-
-#### Event: 'end'
-
-#### repository.config([callback])
-
-#### repository.HEAD([callback])
-
-#### repository.refs([path|options], [callback])
-
-#### repository.tags([callback])
-
-#### repository.heads([callback])
-
-#### repository.versions([range], [callback])
-
-#### repository.latest([range], [callback])
-
-#### repository.checkout([reference], [options], [callback])
-
-#### repository.tag([reference], name|options, [callback])
-
-#### repository.branch([reference], name|options, [callback])
-
-#### repository.merge(reference, [options], [callback])
-
-### Class: git.Config
-
-#### Event: 'gitdir'
-
-#### Event: 'entry'
-
-#### Event: 'end'
-
-### Class: git.Reference
-
-#### Event: 'gitdir'
-
-#### Event: 'commit'
-
-#### Event: 'end'
-
-### Class: git.Refs
-
-#### Event: 'gitdir'
-
-#### Event: 'entry'
-
-#### Event: 'end'
-
-### Class: git.Versions
-
-#### Event: 'gitdir'
-
-#### Event: 'entry'
-
-#### Event: 'end'
-
-### Class: git.Submodules
-
-#### Event: 'gitdir'
-
-#### Event: 'commit'
-
-#### Event: 'entry'
-
-#### Event: 'end'
+[semver]: http://semver.org "Semantic Versioning 2.0.0"
+[events]: http://nodejs.org/api/events.html "nodejs.org/api: Events"
+[stream]: http://nodejs.org/api/stream.html "nodejs.org/api: Stream"
 
 ## [License](LICENSE-MIT)
 
