@@ -21,14 +21,14 @@ For example, if you want to run
 (bare) repository `gh/node-git-semver.git` you can do it like this:
 
 ```javascript
-var cp = git({gitdir: 'gh/node-git-semver'}).run('log', {
+var cp = git({gitdir: 'gh/node-git-semver'}).spawn('log', {
   oneline: true,
   decorate: 'short',
   merges: false
 }, 'origin/master');
 ```
 
-## git.run([argument, ...])
+## git.spawn([argument, ...])
 
 ## git.checkout([argument, ...], [callback])
 

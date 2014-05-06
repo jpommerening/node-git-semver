@@ -22,11 +22,11 @@ describe('git([options])', function () {
     expect(g).to.be.a(git.Git);
   });
 
-  describe('.run([argument, ...])', function () {
+  describe('.spawn([argument, ...])', function () {
 
     it('runs the git executable with the specified arguments', function (done) {
       var g = git();
-      var cp = g.run('--version');
+      var cp = g.spawn('--version');
       utils.collectStream(cp.stdout, function (buffer) {
         var stdout = buffer.toString();
         expect(stdout).to.contain('git version');
@@ -36,7 +36,7 @@ describe('git([options])', function () {
 
     it('flattens object and array arguments', function (done) {
       var g = git();
-      var cp = g.run({version: true});
+      var cp = g.spawn({version: true});
       utils.collectStream(cp.stdout, function (buffer) {
         var stdout = buffer.toString();
         expect(stdout).to.contain('git version');
@@ -46,7 +46,7 @@ describe('git([options])', function () {
 
     it('supplies config options if passed during creation', function (done) {
       var g = git({config: {'test.test': true}});
-      var cp = g.run('config', '--get', 'test.test');
+      var cp = g.spawn('config', '--get', 'test.test');
 
       utils.collectStream(cp.stdout, function (buffer) {
         var stdout = buffer.toString().trim();
@@ -59,7 +59,7 @@ describe('git([options])', function () {
       var origin = fixtures.submodule.origin;
       var gitdir = fixtures.repository.gitdir;
       var g = git({gitdir: gitdir});
-      var cp = g.run('config', '--get', 'submodule.submodule.url');
+      var cp = g.spawn('config', '--get', 'submodule.submodule.url');
 
       utils.collectStream(cp.stdout, function (buffer) {
         var stdout = buffer.toString().trim();
@@ -71,7 +71,7 @@ describe('git([options])', function () {
     it('supplies work tree if passed during creation', function (done) {
       var worktree = fixtures.repository.worktree;
       var g = git({worktree: worktree});
-      var cp = g.run('rev-parse', '--show-toplevel');
+      var cp = g.spawn('rev-parse', '--show-toplevel');
 
       utils.collectStream(cp.stdout, function (buffer) {
         var stdout = buffer.toString().trim();
