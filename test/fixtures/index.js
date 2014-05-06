@@ -11,9 +11,10 @@ var root = path.join(__dirname, '../..');
 
 
 for (var name in repositories) {
-  repositories[name].tags = refs.tags;
-  repositories[name].heads = refs.heads;
   repositories[name].HEAD = refs.HEAD;
+  repositories[name].heads = refs.heads;
+  repositories[name].tags = refs.tags;
+  repositories[name].commits = refs.commits;
   repositories[name].config = config;
 }
 
@@ -71,6 +72,7 @@ repositories.temporary = function (callback) {
         HEAD: source.HEAD,
         heads: source.heads,
         tags: source.tags,
+        commits: source.commits,
         config: source.config,
         remove: function (cb) {
           rimraf(worktree, cb);

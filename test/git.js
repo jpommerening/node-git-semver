@@ -101,11 +101,12 @@ describe('git([options])', function () {
 
     describe('when called with a revision and callback', function () {
       it('checks out the given revision from the repository into the work tree', function (done) {
-        var commit = fixture.tags['v1.0.0'];
-        g.checkout(commit, function (err) {
+        var tag = 'v1.0.0';
+        var commit = fixture.commits[tag];
+        g.checkout(tag, function (err) {
           if (!err) {
-            var file = fs.readFileSync(fixture.worktree + '/file').toString().trim();
-            expect(file).to.equal('1.0.0');
+            var HEAD = fs.readFileSync(fixture.gitdir + '/HEAD').toString().trim();
+            expect(HEAD).to.equal(commit);
           }
           done(err);
         });
@@ -165,8 +166,8 @@ describe('git([options])', function () {
       it('creates the given tag the current HEAD', function (done) {
         g.tag('test', function (err) {
           if (!err) {
-            var file = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
-            expect(file).to.equal(fixture.HEAD);
+            var commit = fs.readFileSync(fixture.gitdir + '/refs/tags/test').toString().trim();
+            expect(commit).to.equal(fixture.HEAD);
           }
           done(err);
         });

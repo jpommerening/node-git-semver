@@ -1,5 +1,8 @@
 {
   "HEAD": "fdfd7215393494636cef35eca25eba19eefbd9a8",
+  "heads": {
+    "master": "fdfd7215393494636cef35eca25eba19eefbd9a8"
+  },
   "tags": {
     "v0.0.1": "255d434cb862dc4675aa80bee124d78c293ba7e9",
     "v0.0.2": "25df29a96117a5ec1ae540edbaddbcc0a3624afd",
@@ -20,7 +23,24 @@
     "v1.3.0": "b29c2e7a469a18d245840cf5719fcb524196c603",
     "v1.3.1": "29a8efc29caf212e5f77a5907cbb5c7156cb46c7"
   },
-  "heads": {
-    "master": "fdfd7215393494636cef35eca25eba19eefbd9a8"
+  "commits": {
+    "v0.0.1": "db1e7c6c289f689341dc91754a8c6c02fafdc8b1",
+    "v0.0.2": "d6ec09df78161f8131c7f657891cc97106bd3fe5",
+    "v0.0.3": "eeb55569cb19c60d08e17c04c2800acddf0c5532",
+    "v0.1.0": "72ddfd687b0dcaeffecfdc257e9b20c1e3953afd",
+    "v0.1.1": "052fdd7bd91f5168280744f68d1b8d1997c001fd",
+    "v0.1.2": "9020dcbbbd013297a659962284a8793ef20ebc31",
+    "v0.2.0": "d93267a4913b8ea31aa7b3e42bbc22b0bb5f27d4",
+    "v0.2.1": "993fecf1d7b75a1ebe0ee7dbc2a73464d575f794",
+    "v1.0.0": "6ba3e151b427d9e63ecccc18d11ff0dd9aa97d22",
+    "v1.0.0+build1": "1e16e3d9c3fb71b931781ab1f1b2cafe3240ed75",
+    "v1.0.0+build2": "5145130aa2c3ce18580c356e6a4c15ef3fc8cf0c",
+    "v1.0.0-rc1": "29795babcf50221ff11b1db2a7a91563df4f4a3d",
+    "v1.0.0-rc2": "a05e9b86902abe3b673fde3bcbc57de81bdd6435",
+    "v1.0.1": "9ca677d58427f7113480a2405df3365291f5aa00",
+    "v1.1.0": "b6b2bc157df76e9b6ff35e8b43acf0280254899a",
+    "v1.2.0": "833a38ab24f695bc2b43284fb31910689da5ae65",
+    "v1.3.0": "8dc41f67b7d72c05545109ca9efbcac5cabddf78",
+    "v1.3.1": "fdfd7215393494636cef35eca25eba19eefbd9a8"
   }
 }

@@ -58,6 +58,28 @@ waits until the asynchronous operations finish.
 
 #### Event: 'end'
 
+#### repository.config([callback])
+
+#### repository.HEAD([callback])
+
+#### repository.refs([path|options], [callback])
+
+#### repository.tags([callback])
+
+#### repository.heads([callback])
+
+#### repository.versions([range], [callback])
+
+#### repository.latest([range], [callback])
+
+#### repository.checkout([reference], [options], [callback])
+
+#### repository.tag([reference], name|options, [callback])
+
+#### repository.branch([reference], name|options, [callback])
+
+#### repository.merge(reference, [options], [callback])
+
 ### Class: git.Config
 
 #### Event: 'gitdir'
@@ -85,6 +107,16 @@ waits until the asynchronous operations finish.
 ### Class: git.Versions
 
 #### Event: 'gitdir'
+
+#### Event: 'entry'
+
+#### Event: 'end'
+
+### Class: git.Submodules
+
+#### Event: 'gitdir'
+
+#### Event: 'commit'
 
 #### Event: 'entry'
 
