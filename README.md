@@ -25,7 +25,7 @@ git.repository('path/to/repository')
   });
 ```
 
-## API
+## [API](doc/api)
 
 The API is built around [events][events] and [streams][stream]. Most methods
 return an event emitter and accept an optional callback that fires once the
