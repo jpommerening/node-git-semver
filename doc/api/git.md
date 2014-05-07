@@ -30,14 +30,14 @@ var cp = git({gitdir: 'gh/node-git-semver'}).spawn('log', {
 
 ## git.spawn([argument, ...])
 
-Spawn a git [child process][] and return it.
+Spawn a git [child process][childprocess] and return it.
 
 ## git.run([argument, ...], [callback])
 
-Spawn a [child process][] and optionally attach a callback to the `end` and
-`error` events. If the command returns 0, the callback will be called with
-a result object as the second parameter. The result object contains the
-following properties:
+Spawn a [child process][childproess] and optionally attach a callback to
+the `end` and `error` events. If the command returns 0, the callback will
+be called with a result object as the second parameter. The result object
+contains the following properties:
 
 - `gitdir`: The git directory that was passed to git via `--git-dir`.
 - `worktree`: The work tree that was passed to git via `--work-tree`.
@@ -45,8 +45,8 @@ following properties:
 - `args`: The flattened arguments git was called with.
 - `code`: The return code of the git process.
 
-If the child process fires an `error` event, or if the return code is not zero
-the callback will be called with an _Error_ object, extended with the
+If the child process fires an `error` event, or if the return code is not
+zero the callback will be called with an _Error_ object, extended with the
 properties of the result object.
 
 ## git.checkout([argument, ...],equal [callback])
@@ -65,3 +65,4 @@ Alias for `run` with `branch` as the first argument.
 
 Alias for `run` with `merge` as the first argument.
 
+[childprocess]: http://nodejs.org/api/child_process.html "nodejs.org/api: Child Process"
