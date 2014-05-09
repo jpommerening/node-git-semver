@@ -1,8 +1,9 @@
 {
   "name": "git-semver",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Manage semantically versioned git repositories",
   "license": "MIT",
+  "homepage": "https://github.com/jpommerening/node-git-semver",
   "repository": {
     "type": "git",
     "url": "http://github.com/jpommerening/node-git-semver.git"
@@ -16,6 +17,9 @@
     "url": "http://github.com/jpommerening/node-git-semver/issues"
   },
   "main": "lib",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "scripts": {
     "test": "grunt test jshint",
     "postinstall": "node warn.js"
