@@ -34,7 +34,7 @@ Spawn a git [child process][childprocess] and return it.
 
 ## git.run([argument, ...], [callback])
 
-Spawn a [child process][childproess] and optionally attach a callback to
+Spawn a [child process][childprocess] and optionally attach a callback to
 the `end` and `error` events. If the command returns 0, the callback will
 be called with a result object as the second parameter. The result object
 contains the following properties:

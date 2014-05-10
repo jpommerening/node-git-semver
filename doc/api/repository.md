@@ -57,17 +57,38 @@ marks the point where the other methods start to do their work.
 
 ## repository.config([callback])
 
+Create a new [config](./config.md) instance that represents the `.git/config`
+file.
+
 ## repository.HEAD([callback])
+
+Create a new [reference](./reference.md) instance that points to the "HEAD" of
+the repository.
 
 ## repository.refs([path|options], [callback])
 
+Create a new [refs](./refs.md) instance and fill it with references that are
+located at the given path, for example `refs/heads/`.
+
 ## repository.tags([callback])
+
+Create a new [refs](./refs.md) instance and fill it with the tags of the
+repository.
 
 ## repository.heads([callback])
 
+Create a new [refs](./refs.md) instance and fill it with the branches of the
+repository.
+
 ## repository.versions([range], [callback])
 
+Create a new [versions](./versions.md) instance and fill it with the
+refs that match the given semantic version range.
+
 ## repository.latest([range], [callback])
+
+Create a new [reference](./versions.md) instance and fill it with the
+refs that match the given semantic version range.
 
 ## repository.checkout([reference], [options], [callback])
 
