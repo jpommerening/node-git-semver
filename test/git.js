@@ -82,7 +82,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.checkout(revision, [args...], callback)', function () {
+  describe('.checkout(revision, [argument, ...], callback)', function () {
 
     var fixture;
     var g;
@@ -145,7 +145,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.tag(name, [args...], callback)', function () {
+  describe('.tag(name, [argument, ...], callback)', function () {
 
     var fixture;
     var g;
@@ -206,7 +206,7 @@ describe('git([options])', function () {
 
   });
 
-  describe('.branch(name, [args...], callback)', function () {
+  describe('.branch(name, [argument, ...], callback)', function () {
 
     var fixture;
     var g;
