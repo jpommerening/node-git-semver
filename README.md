@@ -33,7 +33,8 @@ underlying emitter emits an `end` event or raises an error.
 
 This allows for succinct code, that chains multiple methods (hello
 [demeter](http://en.wikipedia.org/wiki/Law_of_Demeter)) synchronously and
-waits until the asynchronous operations finish.
+waits until the asynchronous operations finish, a behaviour that closely
+resembles promises and deferreds
 
 Most operations start from the [repository](doc/api/repository.md) class.
 Once instantiated the repository tries to resolve it's `.git` directory and
