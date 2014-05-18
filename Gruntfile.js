@@ -9,16 +9,20 @@ module.exports = function (grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      lib: [
-        'Gruntfile.js',
-        'index.js',
-        'lib/*.js'
-      ],
+      lib: {
+        src: [
+          __filename,
+          'index.js',
+          'lib/*.js'
+        ]
+      },
       test: {
         options: {
           jshintrc: 'test/.jshintrc'
         },
         src: [
+          'tasks/*.js',
+          'test/fixtures/*.js',
           'test/*.js'
         ]
       }
@@ -28,24 +32,24 @@ module.exports = function (grunt) {
         ui: 'bdd',
         reporter: 'spec'
       },
-      test: [
-        'test/*.js'
-      ]
+      test: {
+        src: [ 'test/*.js' ]
+      }
     },
     watch: {
       lib: {
         files: [
-          'Gruntfile.js',
+          __filename,
           'index.js',
           'lib/*.js'
         ],
-        tasks: ['jshint:lib', 'test']
+        tasks: ['newer:jshint:lib', 'mochacli']
       },
       test: {
         files: [
           'test/*.js',
         ],
-        tasks: ['jshint:test', 'test']
+        tasks: ['newer:jshint:test', 'newer:mochacli:test']
       }
     }
   });
@@ -57,6 +61,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-notify');
+  grunt.loadNpmTasks('grunt-newer');
 
   grunt.registerTask('test', ['clean', 'fixtures', 'mochacli']);
   grunt.registerTask('default', ['test', 'jshint']);

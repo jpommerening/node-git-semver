@@ -16,6 +16,10 @@
   "bugs": {
     "url": "http://github.com/jpommerening/node-git-semver/issues"
   },
+  "keywords": [
+    "git",
+    "semver"
+  ],
   "main": "lib",
   "engines": {
     "node": ">= 0.8.0"
@@ -31,16 +35,17 @@
     "which": "~1.0.5"
   },
   "devDependencies": {
+    "expect.js": "~0.3.1",
     "grunt": "~0.4.4",
     "grunt-cli": "~0.1.13",
+    "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-mocha-cli": "~1.8.0",
+    "grunt-newer": "^0.7.0",
     "grunt-notify": "~0.2.20",
-    "expect.js": "~0.3.1",
+    "rimraf": "~2.2.6",
     "tar": "~0.1.19",
-    "grunt-contrib-clean": "~0.5.0",
-    "tmp": "0.0.23",
-    "rimraf": "~2.2.6"
+    "tmp": "0.0.23"
   }
 }

@@ -366,4 +366,8 @@ describe('repository([options|cwd], [callback])', function () {
     });
   });
 
+  describe('method scheduling', function () {
+
+  });
+
 });
